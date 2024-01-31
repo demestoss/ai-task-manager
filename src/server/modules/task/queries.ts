@@ -1,5 +1,5 @@
 import type { Task, TaskId } from './model';
-import { DataError } from '../../error/DataError';
+import { DataError } from '../../errors/DataError';
 
 const tasks: Task[] = [];
 
@@ -17,11 +17,18 @@ export async function deleteTaskById(id: TaskId): Promise<void> {
 	tasks.splice(index, 1);
 }
 
-type CreateTaskInput = Omit<Task, 'id'>;
-
-export async function createTask(newTask: CreateTaskInput) {
-	const id = crypto.randomUUID();
-	const task = { ...newTask, id };
+export async function createTask(task: Task) {
 	tasks.push(task);
+	return task;
+}
+
+export async function updateTask(task: Task) {
+	const index = tasks.findIndex((t) => t.id === task.id);
+
+	if (index === -1) {
+		throw new DataError('not-found', "Task doesn't exists");
+	}
+
+	tasks.splice(index, 1, task);
 	return task;
 }

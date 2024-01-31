@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { taskRouter } from './modules/task/routes'
-import { parseError } from './error/parseError';
+import { parseError } from './errors/parseError';
 
 export const apiRouter = new Hono()
 	.basePath('/api')
