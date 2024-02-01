@@ -1,6 +1,11 @@
 <script lang="ts">
 	import type { TaskCategory } from '$lib/server/modules/task/model';
-	import { Code, Bath, Fish, ShieldQuestion, Plane, Book } from 'lucide-svelte';
+	import Code from 'lucide-svelte/icons/code';
+	import Bath from 'lucide-svelte/icons/bath';
+	import Fish from 'lucide-svelte/icons/fish';
+	import ShieldQuestion from 'lucide-svelte/icons/shield-question';
+	import Plane from 'lucide-svelte/icons/plane';
+	import Book from 'lucide-svelte/icons/book';
 	import { cn } from '$lib/utils';
 
 	let { category } = $props<{ category: TaskCategory }>();
