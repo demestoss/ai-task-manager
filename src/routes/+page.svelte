@@ -6,6 +6,7 @@
 	import { CardContent, CardTitle, Card, CardHeader } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { TaskCard } from '$lib/components/task';
+	import { CardFooter } from '$lib/components/ui/card/index.js';
 
 	let { data } = $props();
 	const client = makeClient(fetch);
@@ -29,18 +30,18 @@
 </script>
 
 <h1
-	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
+	class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 >
 	AITM: The best task manager powered by AI
 </h1>
 
-<Card class="mb-3">
-	<CardHeader>
-		<CardTitle tag="h2">New task:</CardTitle>
-	</CardHeader>
+<Card class="mb-10">
+	<form method="POST" use:enhance>
+		<CardHeader>
+			<CardTitle tag="h2">New task:</CardTitle>
+		</CardHeader>
 
-	<CardContent>
-		<form method="POST" use:enhance>
+		<CardContent>
 			<Input
 				type="text"
 				name="name"
@@ -49,13 +50,15 @@
 				disabled={isLoading}
 				bind:value={taskName}
 			/>
+		</CardContent>
 
+		<CardFooter>
 			<Button type="submit" disabled={isLoading}>Add</Button>
-		</form>
-	</CardContent>
+		</CardFooter>
+	</form>
 </Card>
 
-<Card>
+<div>
 	<CardHeader>
 		<CardTitle tag="h2">Current Tasks:</CardTitle>
 	</CardHeader>
@@ -75,4 +78,4 @@
 			</ul>
 		{/if}
 	</CardContent>
-</Card>
+</div>

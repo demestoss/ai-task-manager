@@ -11,6 +11,9 @@
 	import TaskIcon from '$lib/components/task/TaskIcon.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import TaskPriority from '$lib/components/task/TaskPriority.svelte';
+	import { formatDate } from '$lib/date.js';
+	import { Clock } from 'lucide-svelte';
+	import TaskDueDate from '$lib/components/task/TaskDueDate.svelte';
 
 	type Events = {
 		remove: () => void;
@@ -21,33 +24,37 @@
 	>();
 </script>
 
-<Card>
+<Card class="flex">
 	{#if category}
-		<TaskIcon {category} />
+		<div class="mr-[-12px]">
+			<TaskIcon {category} />
+		</div>
 	{/if}
 
-	<CardHeader>
-		<div class="flex justify-between">
-			<CardTitle tag="h3">
-				{name}
-			</CardTitle>
+	<div class="grow">
+		<CardHeader>
+			<div class="flex justify-between">
+				<CardTitle tag="h3">
+					{name}
+				</CardTitle>
 
-			{#if dueDate}
-				<span class="text-sm text-muted-foreground">{dueDate}</span>
+				{#if dueDate}
+					<TaskDueDate {dueDate} />
+				{/if}
+			</div>
+		</CardHeader>
+
+		<CardContent class="space-y-3">
+			{#if priority}
+				<TaskPriority {priority} />
 			{/if}
-		</div>
-	</CardHeader>
+			<CardDescription>
+				{description}
+			</CardDescription>
+		</CardContent>
 
-	<CardContent>
-		{#if priority}
-			<TaskPriority {priority} />
-		{/if}
-		<CardDescription>
-			{description}
-		</CardDescription>
-	</CardContent>
-
-	<CardFooter class="flex justify-end">
-		<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
-	</CardFooter>
+		<CardFooter class="flex justify-end">
+			<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
+		</CardFooter>
+	</div>
 </Card>

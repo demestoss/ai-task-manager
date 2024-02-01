@@ -10,7 +10,7 @@
 {:else if priority === 'high'}
 	<Badge variant="destructive">Urgent</Badge>
 {:else if priority === 'medium'}
-	<Badge variant="default">Medium</Badge>/
+	<Badge variant="default">Medium</Badge>
 {:else if priority === 'low'}
 	<Badge variant="secondary">Lowest</Badge>
 {/if}
