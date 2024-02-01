@@ -5,11 +5,8 @@
 	type Props = HTMLAttributes<HTMLParagraphElement>;
 
 	let { ...props } = $props<Props>();
-
-	let className: Props['class'] = undefined;
-	export { className as class };
 </script>
 
-<p class={cn('text-sm text-muted-foreground', className)} {...props}>
+<p {...props} class={cn('text-sm text-muted-foreground', props.class)}>
 	<slot />
 </p>

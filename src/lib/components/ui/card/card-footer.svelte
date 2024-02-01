@@ -5,11 +5,8 @@
 	type Props = HTMLAttributes<HTMLDivElement>;
 
 	let { ...props } = $props<Props>();
-
-	let className: Props['class'] = undefined;
-	export { className as class };
 </script>
 
-<div class={cn('flex items-center p-6 pt-0', className)} {...props}>
+<div {...props} class={cn('flex items-center p-6 pt-0', props.class)}>
 	<slot />
 </div>

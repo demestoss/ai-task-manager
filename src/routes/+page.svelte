@@ -5,6 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { CardContent, CardTitle, Card, CardHeader } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
+	import { TaskCard } from '$lib/components/task';
 
 	let { data } = $props();
 	const client = makeClient(fetch);
@@ -33,7 +34,7 @@
 	AITM: The best task manager powered by AI
 </h1>
 
-<Card>
+<Card class="mb-3">
 	<CardHeader>
 		<CardTitle tag="h2">New task:</CardTitle>
 	</CardHeader>
@@ -51,5 +52,27 @@
 
 			<Button type="submit" disabled={isLoading}>Add</Button>
 		</form>
+	</CardContent>
+</Card>
+
+<Card>
+	<CardHeader>
+		<CardTitle tag="h2">Current Tasks:</CardTitle>
+	</CardHeader>
+
+	<CardContent>
+		{#if data.tasks.length === 0}
+			<p class="leading-7 [&:not(:first-child)]:mt-6">
+				You don't have any tasks yet. Let's create one!
+			</p>
+		{:else}
+			<ul class="space-y-2">
+				{#each data.tasks as task (task.id)}
+					<li>
+						<TaskCard {...task} remove={() => handleRemove(task.id)} />
+					</li>
+				{/each}
+			</ul>
+		{/if}
 	</CardContent>
 </Card>
