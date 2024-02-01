@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, isNull } from 'drizzle-orm';
 import { type TaskDataModel, tasks } from '../../db/schema';
 import type { DatabasePool } from '../../db/database';
 import type { Task, TaskId } from './model';
@@ -15,6 +15,7 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
 			dueDate: tasks.dueDate
 		})
 		.from(tasks)
+		.where(isNull(tasks.resolutionDate))
 		.all();
 
 	return result.map(mapToDomainModel);
