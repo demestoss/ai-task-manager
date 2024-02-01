@@ -3,10 +3,9 @@
 	import { cn } from '$lib/utils';
 	import type { InputEvents } from '.';
 
-	// type $$Props = HTMLInputAttributes;
-	// type $$Events = InputEvents;
+	type $$Events = InputEvents;
 
-	let { value, ...props } = $props<HTMLInputAttributes & InputEvents>();
+	let { value, ...props } = $props<HTMLInputAttributes>();
 
 	let className: HTMLInputAttributes['class'] = undefined;
 	export { className as class };

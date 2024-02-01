@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import type { HTMLAttributes } from "svelte/elements";
+	import { cn } from '$lib/utils';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	type $$Props = HTMLAttributes<HTMLDivElement>;
+	type Props = HTMLAttributes<HTMLDivElement>;
 
-	let className: $$Props["class"] = undefined;
+	let { ...props } = $props<Props>();
+
+	let className: Props['class'] = undefined;
 	export { className as class };
 </script>
 
-<div class={cn("p-6 pt-0", className)} {...$$restProps}>
+<div class={cn('p-6 pt-0', className)} {...props}>
 	<slot />
 </div>
