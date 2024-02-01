@@ -27,6 +27,20 @@
 			isLoading = false;
 		}
 	}
+
+	async function handleFinish(id: string) {
+		try {
+			isLoading = true;
+			await client.v1.tasks[':id'].finish.$post({
+				param: { id }
+			});
+			await invalidate(client.v1.tasks.$url());
+		} catch (e) {
+			console.error(e);
+		} finally {
+			isLoading = false;
+		}
+	}
 </script>
 
 <h1
@@ -72,7 +86,11 @@
 			<ul class="space-y-2">
 				{#each data.tasks as task (task.id)}
 					<li>
-						<TaskCard {...task} remove={() => handleRemove(task.id)} />
+						<TaskCard
+							{...task}
+							remove={() => handleRemove(task.id)}
+							finish={() => handleFinish(task.id)}
+						/>
 					</li>
 				{/each}
 			</ul>

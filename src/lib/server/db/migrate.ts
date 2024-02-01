@@ -1,6 +1,6 @@
+import { makeLocalDatabaseClient } from '$lib/server/db/database';
 import { migrate } from 'drizzle-orm/bun-sqlite/migrator';
-import type { DatabasePool } from './database';
 
-export async function runMigrations(db: DatabasePool) {
-	await migrate(db, { migrationsFolder: '../drizzle' });
-}
+const db = makeLocalDatabaseClient();
+
+migrate(db, { migrationsFolder: './src/lib/server/drizzle' });

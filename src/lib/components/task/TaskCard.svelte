@@ -15,9 +15,10 @@
 
 	type Events = {
 		remove: () => void;
+		finish: () => void;
 	};
 
-	let { name, category, description, dueDate, priority, remove } = $props<Task & Events>();
+	let { name, category, description, dueDate, priority, remove, finish } = $props<Task & Events>();
 </script>
 
 <Card class="flex">
@@ -49,7 +50,8 @@
 			</CardDescription>
 		</CardContent>
 
-		<CardFooter class="flex justify-end">
+		<CardFooter class="flex justify-end space-x-3">
+			<Button type="button" variant="default" onclick={finish}>Finish</Button>
 			<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
 		</CardFooter>
 	</div>

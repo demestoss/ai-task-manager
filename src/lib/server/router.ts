@@ -1,4 +1,3 @@
-import { runMigrations } from '$lib/server/db/migrate';
 import type { RouterContext } from './context';
 import { makeLocalDatabaseClient } from './db/database';
 import { finishedTasksRouter } from './modules/finished-task/routes';
@@ -10,8 +9,6 @@ import { prettyJSON } from 'hono/pretty-json';
 
 const app = new Hono().get('/ping', (c) => c.text('pong'));
 const db = makeLocalDatabaseClient();
-
-await runMigrations(db);
 
 app.use('*', logger());
 app.use('*', prettyJSON());
