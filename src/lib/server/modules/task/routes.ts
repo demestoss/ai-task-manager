@@ -9,12 +9,14 @@ import { createFinishedTask } from '../finished-task/service';
 
 export const taskRouter = new Hono<{ Variables: RouterContext }>()
 	.get('/', async (c) => {
-		const tasks = await model.getAllTasks();
+		const db = c.get('db');
+		const tasks = await model.getAllTasks(db);
 		return c.json<Task[]>(tasks);
 	})
 	.post('/', zValidator('json', ask.TaskCreateInput), async (c) => {
 		const newTask = c.req.valid('json');
-		const task = await model.createTask(newTask);
+		const db = c.get('db');
+		const task = await model.createTask(newTask, db);
 		return c.json<Task>(task);
 	})
 	.patch(
@@ -24,17 +26,20 @@ export const taskRouter = new Hono<{ Variables: RouterContext }>()
 		async (c) => {
 			const { id } = c.req.valid('param');
 			const updatedTask = c.req.valid('json');
-			const task = await model.updateTaskById(id, updatedTask);
+			const db = c.get('db');
+			const task = await model.updateTaskById(id, updatedTask, db);
 			return c.json<Task>(task);
 		}
 	)
 	.delete('/:id', zValidator('param', ask.TaskParam), async (c) => {
 		const { id } = c.req.valid('param');
-		await model.deleteTaskById(id);
+		const db = c.get('db');
+		await model.deleteTaskById(id, db);
 		return c.json(Responder.success('Task removed successfully'), 201);
 	})
 	.post(':id/finish', zValidator('param', ask.TaskParam), async (c) => {
 		const { id } = c.req.valid('param');
-		await createFinishedTask(id);
+		const db = c.get('db');
+		await createFinishedTask(id, db);
 		return c.json(Responder.success('Task successfully marked as finished'), 201);
 	});

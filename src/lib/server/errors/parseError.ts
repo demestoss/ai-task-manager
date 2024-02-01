@@ -5,6 +5,8 @@ export function parseError(error: Error): [string, number] {
 		switch (error.type) {
 			case "not-found":
 				return [`Not Found: ${error.message}`, 404]
+			case 'creating-failed':
+				return [`Creating failed: ${error.message}`, 500]
 		}
 	}
 

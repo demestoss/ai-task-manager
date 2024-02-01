@@ -14,7 +14,7 @@ export const Task = z.object({
 	name: z.string().min(1).max(127),
 	description: z.string().min(1).max(2048).optional(),
 	priority: TaskPriority.optional(),
-	dueDate: z.date().optional(),
+	dueDate: z.number().optional(),
 	category: TaskCategory.optional()
 });
 export type Task = z.infer<typeof Task>;

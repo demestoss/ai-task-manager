@@ -9,7 +9,7 @@ export async function makeTaskPrediction(task: TaskCreateInput): Promise<TaskCre
 		description: randomText(randomIntInRange(50, 255)),
 		priority: randomItemFromArray(priorities),
 		category: task.category ?? randomItemFromArray(categories),
-		dueDate: randomDateFromNow(new Date('2024-05-20')),
+		dueDate: randomDateFromNow(new Date('2024-05-20')).getTime(),
 		...task
 	};
 }

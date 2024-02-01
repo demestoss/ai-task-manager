@@ -11,17 +11,13 @@
 	import TaskIcon from '$lib/components/task/TaskIcon.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import TaskPriority from '$lib/components/task/TaskPriority.svelte';
-	import { formatDate } from '$lib/date.js';
-	import { Clock } from 'lucide-svelte';
 	import TaskDueDate from '$lib/components/task/TaskDueDate.svelte';
 
 	type Events = {
 		remove: () => void;
 	};
 
-	let { name, category, description, dueDate, priority, remove } = $props<
-		Omit<Task, 'dueDate'> & { dueDate?: string } & Events
-	>();
+	let { name, category, description, dueDate, priority, remove } = $props<Task & Events>();
 </script>
 
 <Card class="flex">

@@ -4,7 +4,7 @@
 	import { cn } from '$lib/utils';
 	import type { DueType } from '$lib/server/modules/task/model';
 
-	let { dueDate: dueDateStr } = $props<{ dueDate: string }>();
+	let { dueDate: dueDateTimestamp } = $props<{ dueDate: number }>();
 
 	function getDueType(diff: number): DueType {
 		if (diff < 0) {
@@ -18,7 +18,7 @@
 		}
 	}
 
-	let dueDate = $derived(new Date(dueDateStr));
+	let dueDate = $derived(new Date(dueDateTimestamp));
 	let dueType = $derived(getDueType(getDaysDiff(dueDate)));
 
 	function getDueColor(type: DueType) {
