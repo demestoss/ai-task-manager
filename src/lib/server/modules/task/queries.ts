@@ -1,9 +1,10 @@
+import type { DatabasePool } from '../../db/database';
 import type { Task, TaskId } from './model';
 import { DataError } from '../../errors/DataError';
 
 const tasks: Task[] = [];
 
-export async function queryAllTasks() {
+export async function queryAllTasks(db: DatabasePool) {
 	return tasks;
 }
 

@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "server:dev": "bun run --hot src/server/serve.ts",
     "server:start": "bun run src/server/serve.ts",
+    "db:gen": "drizzle-kit generate:sqlite",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
@@ -23,6 +24,7 @@
     "autoprefixer": "^10.4.17",
     "bun-types": "^1.0.25",
     "clsx": "^2.1.0",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.35.1",
@@ -43,7 +45,9 @@
   "type": "module",
   "dependencies": {
     "@hono/zod-validator": "^0.1.11",
+    "@libsql/client": "^0.4.3",
     "bits-ui": "^0.16.0",
+    "drizzle-orm": "^0.29.3",
     "hono": "^3.12.8",
     "lucide-svelte": "^0.320.0",
     "zod": "^3.22.4"

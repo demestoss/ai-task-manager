@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { formatDate, getDaysDiff } from '$lib/date';
 	import { Clock } from 'lucide-svelte';
-	import type { DueType } from '$lib/components/task/types';
 	import { cn } from '$lib/utils';
+	import type { DueType } from '$lib/server/modules/task/model';
 
 	let { dueDate: dueDateStr } = $props<{ dueDate: string }>();
 

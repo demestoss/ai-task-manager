@@ -18,3 +18,13 @@ export const Task = z.object({
 	category: TaskCategory.optional()
 });
 export type Task = z.infer<typeof Task>;
+
+export const DueType = z.enum(['not-due', 'close-to-due', 'due-date', 'over-due']);
+export type DueType = z.infer<typeof DueType>;
+
+export const TaskViewModel = z
+	.object({
+		dueType: DueType.optional()
+	})
+	.merge(Task);
+export type TaskViewModel = z.infer<typeof TaskViewModel>;

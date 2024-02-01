@@ -1,6 +1,6 @@
 import type { Task, TaskId } from './model';
 import * as queries from './queries';
-import { makeTaskPrediction } from '$lib/server/modules/predicts/task';
+import { makeTaskPrediction } from '../predicts/task';
 
 export async function getAllTasks(): Promise<Task[]> {
 	return queries.queryAllTasks();

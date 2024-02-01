@@ -1,1 +1,0 @@
-export type DueType = 'not-due' | 'close-to-due' | 'due-date' | 'over-due'

@@ -1,5 +1,5 @@
-import type { TaskCategory, TaskPriority } from '$lib/server/modules/task/model';
-import type { TaskCreateInput, TaskCreateModel } from '$lib/server/modules/task/ask';
+import type { TaskCategory, TaskPriority } from '../task/model';
+import type { TaskCreateInput, TaskCreateModel } from '../task/ask';
 
 const priorities: TaskPriority[] = ['high', 'low', 'medium', 'useless'];
 const categories: TaskCategory[] = ['coding', 'hobby', 'home', 'work', 'other', 'reading'];
