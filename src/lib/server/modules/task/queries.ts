@@ -1,7 +1,8 @@
 import { eq, isNull } from 'drizzle-orm';
+import { z } from 'zod';
 import { type TaskDataModel, tasks } from '../../db/schema';
 import type { DatabasePool } from '../../db/database';
-import type { Task, TaskId } from './model';
+import { Task, type TaskId } from './model';
 import { DataError } from '../../errors/DataError';
 
 export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
@@ -12,13 +13,13 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
 			description: tasks.description,
 			priority: tasks.priority,
 			category: tasks.category,
-			dueDate: tasks.dueDate
+			dueDate: tasks.dueDate,
+			createdAt: tasks.createdAt
 		})
 		.from(tasks)
-		.where(isNull(tasks.resolutionDate))
-		.all();
+		.where(isNull(tasks.resolutionDate));
 
-	return result.map(mapToDomainModel);
+	return result.map(mapTaskToDomainModel);
 }
 
 export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void> {
@@ -36,45 +37,55 @@ export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
 		description: tasks.description,
 		priority: tasks.priority,
 		category: tasks.category,
-		dueDate: tasks.dueDate
+		dueDate: tasks.dueDate,
+		createdAt: tasks.createdAt
 	});
 
 	if (result.length === 0) {
 		throw new DataError('creating-failed', 'Failed to create the task');
 	}
 
-	return mapToDomainModel(result[0]);
+	return mapTaskToDomainModel(result[0]);
 }
 
-export async function updateTask(task: Task, db: DatabasePool): Promise<Task> {
+export const TaskUpdateInput = Task.omit({ id: true, createdAt: true });
+export type TaskUpdateInput = Partial<z.infer<typeof TaskUpdateInput>>;
+
+export async function updateTask(
+	id: TaskId,
+	taskInput: TaskUpdateInput,
+	db: DatabasePool
+): Promise<Task> {
 	const result = await db
 		.update(tasks)
-		.set(mapToDataModel(task))
-		.where(eq(tasks.id, task.id))
+		.set({ ...taskInput })
+		.where(eq(tasks.id, id))
 		.returning({
 			id: tasks.id,
 			name: tasks.name,
 			description: tasks.description,
 			priority: tasks.priority,
 			category: tasks.category,
-			dueDate: tasks.dueDate
+			dueDate: tasks.dueDate,
+			createdAt: tasks.createdAt
 		});
 
 	if (result.length === 0) {
 		throw new DataError('not-found', "Task doesn't exists");
 	}
 
-	return mapToDomainModel(result[0]);
+	return mapTaskToDomainModel(result[0]);
 }
 
-function mapToDomainModel(task: TaskDataModel): Task {
+export function mapTaskToDomainModel(task: TaskDataModel): Task {
 	return {
 		id: task.id,
 		name: task.name,
 		description: task.description ?? undefined,
 		category: task.category ?? undefined,
 		dueDate: task.dueDate ?? undefined,
-		priority: task.priority ?? undefined
+		priority: task.priority ?? undefined,
+		createdAt: task.createdAt
 	};
 }
 

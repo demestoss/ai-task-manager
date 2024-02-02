@@ -28,5 +28,5 @@ export async function updateTaskById(
 	updatedTask: UpdateTaskInput,
 	db: DatabasePool
 ): Promise<Task> {
-	return queries.updateTask({ id, ...updatedTask }, db);
+	return queries.updateTask(id, updatedTask, db);
 }

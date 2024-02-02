@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class={cn(`border-l-4 ${getStyleByCategory()} pl-2 pr-2 pt-4 h-full rounded`)}>
+<div class={cn(`border-l-4 ${getStyleByCategory()} pl-2 pr-2 pt-4 h-full rounded mr-[-12px]`)}>
 	{#if category === 'coding'}
 		<Code class="size-8" />
 	{:else if category === 'home'}

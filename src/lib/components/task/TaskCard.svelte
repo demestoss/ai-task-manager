@@ -23,9 +23,7 @@
 
 <Card class="flex">
 	{#if category}
-		<div class="mr-[-12px]">
 			<TaskIcon {category} />
-		</div>
 	{/if}
 
 	<div class="grow">
