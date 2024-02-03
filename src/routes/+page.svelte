@@ -32,16 +32,14 @@
 			await client.v1.tasks[':id'].$delete({
 				param: { id }
 			});
-			await Promise.all([
-				invalidate(client.v1.tasks.$url()),
-				toast.success('The task was successfully deleted', {
-					description: 'Do you wnt to restore it?',
-					action: {
-						label: 'Undo',
-						onClick: () => handleRestore(id)
-					}
-				})
-			]);
+			await invalidate(client.v1.tasks.$url());
+			toast.success('The task was successfully deleted', {
+				description: 'Do you wnt to restore it?',
+				action: {
+					label: 'Undo',
+					onClick: () => handleRestore(id)
+				}
+			});
 		} catch (e) {
 			console.error(e);
 		} finally {

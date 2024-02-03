@@ -49,8 +49,8 @@
     "@libsql/client": "^0.4.3",
     "bits-ui": "^0.16.0",
     "drizzle-orm": "^0.29.3",
-    "hono": "^3.12.8",
-    "lucide-svelte": "^0.320.0",
+    "hono": "^3.12.10",
+    "lucide-svelte": "^0.321.0",
     "mode-watcher": "^0.2.0",
     "svelte-sonner": "^0.3.11",
     "zod": "^3.22.4"
