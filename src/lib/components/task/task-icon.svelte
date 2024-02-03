@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="mr-[-12px]">
+<div class="mr-[-12px] ml-[-1px]">
 	<div class={cn(`border-l-4 ${getStyleByCategory()} pl-2 pr-2 pt-4 h-full rounded`)}>
 		{#if category === 'coding'}
 			<Code class="size-8" />

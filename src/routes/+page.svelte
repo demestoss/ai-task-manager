@@ -97,7 +97,7 @@
 				You don't have any tasks yet. Let's create one!
 			</p>
 		{:else}
-			<ul class="space-y-2">
+			<ul class="space-y-2.5">
 				{#each data.tasks as task (task.id)}
 					<li>
 						<TaskCard

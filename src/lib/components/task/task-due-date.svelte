@@ -1,25 +1,11 @@
 <script lang="ts">
-	import { formatDate, getDaysDiff, type Timestamp } from '$lib/date';
+	import { getDueType } from './utils';
+	import { formatDate, type Timestamp } from '$lib/date';
 	import { Clock } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
 	import type { DueType } from '$lib/server/modules/task/model';
 
-	let { dueDate: dueDateStr } = $props<{ dueDate: Timestamp }>();
-
-	function getDueType(diff: number): DueType {
-		if (diff < 0) {
-			return 'over-due';
-		} else if (diff >= 0 && diff <= 1) {
-			return 'due-date';
-		} else if (diff < 10) {
-			return 'close-to-due';
-		} else {
-			return 'not-due';
-		}
-	}
-
-	let dueDate = $derived(new Date(dueDateStr));
-	let dueType = $derived(getDueType(getDaysDiff(new Date(), dueDate)));
+	let { dueDate: dueDateTimestamp } = $props<{ dueDate: Timestamp }>();
 
 	function getDueColor(type: DueType) {
 		switch (type) {
@@ -31,6 +17,9 @@
 				return 'text-red-700';
 		}
 	}
+
+	let dueDate = $derived(new Date(dueDateTimestamp));
+	let dueType = $derived(getDueType(dueDateTimestamp));
 
 	let color = $derived(getDueColor(dueType));
 </script>
