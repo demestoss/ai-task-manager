@@ -6,6 +6,7 @@ import { logger } from 'hono/logger';
 import { taskRouter } from './modules/task/routes';
 import { parseError } from './errors/parseError';
 import { prettyJSON } from 'hono/pretty-json';
+import { bearerAuth } from 'hono/bearer-auth';
 
 const app = new Hono().get('/ping', (c) => c.text('pong'));
 const db = makeLocalDatabaseClient();
@@ -18,6 +19,9 @@ app.onError((err, c) => {
 	const [text, status] = parseError(err);
 	return c.text(text, status);
 });
+
+const token = process.env.BEARER_TOKEN || 'secret_tokenn';
+app.use('/api/*', bearerAuth({ token }));
 
 const apiRouter = new Hono<{ Variables: RouterContext }>().use('*', async (c, next) => {
 	c.set('db', db);

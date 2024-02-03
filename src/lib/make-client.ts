@@ -11,7 +11,12 @@ export const makeClient = (fetch: Window['fetch']) => {
 		return browserClient;
 	}
 
-	const client = hc<ApiRouter>(origin + '/api', { fetch });
+	const client = hc<ApiRouter>(origin + '/api', {
+		fetch,
+		headers: {
+			Authorization: `Bearer secret_tokenn`
+		}
+	});
 
 	if (isBrowser) {
 		browserClient = client;

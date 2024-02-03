@@ -1,1 +1,1 @@
-export { default as FinishedTaskCard } from './FinishedTaskCard.svelte';
+export { default as FinishedTaskCard } from './finished-task-card.svelte';
