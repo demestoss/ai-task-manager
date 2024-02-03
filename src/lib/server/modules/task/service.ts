@@ -1,7 +1,7 @@
 import type { DatabasePool } from '$lib/server/db/database';
 import type { Task, TaskId } from './model';
 import * as queries from './queries';
-import { makeTaskPrediction } from '../predicts/task';
+import { makeTaskRandomPrediction } from '../predicts/random-task';
 
 export async function getAllTasks(db: DatabasePool): Promise<Task[]> {
 	return queries.queryAllTasks(db);
@@ -15,7 +15,7 @@ type CreateTaskInput = Omit<Task, 'id' | 'createdAt'>;
 
 export async function createTask(newTask: CreateTaskInput, db: DatabasePool): Promise<Task> {
 	const task: Task = {
-		...(await makeTaskPrediction(newTask)),
+		...(await makeTaskRandomPrediction(newTask)),
 		id: crypto.randomUUID(),
 		createdAt: new Date().getTime()
 	};

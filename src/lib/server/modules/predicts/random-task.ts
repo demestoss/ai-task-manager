@@ -4,7 +4,7 @@ import type { TaskCreateInput, TaskCreateModel } from '../task/ask';
 const priorities: TaskPriority[] = ['high', 'low', 'medium', 'useless'];
 const categories: TaskCategory[] = ['coding', 'hobby', 'home', 'work', 'other', 'reading'];
 
-export async function makeTaskPrediction(task: TaskCreateInput): Promise<TaskCreateModel> {
+export async function makeTaskRandomPrediction(task: TaskCreateInput): Promise<TaskCreateModel> {
 	return {
 		description: randomText(randomIntInRange(50, 255)),
 		priority: randomItemFromArray(priorities),
