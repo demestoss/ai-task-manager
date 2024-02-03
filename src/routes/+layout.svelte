@@ -5,18 +5,15 @@
 </script>
 
 <div class="container">
-	<header class="flex">
-		<h1
-			class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-		>
-			AITM: Task manager powered by AI
-		</h1>
-
+	<header class="flex justify-between items-center">
 		<nav>
-			<ul>
+			<ul class="flex space-x-5">
 				<li>
 					<a
-						class={clsx('text-foreground/60 hover:text-foreground/80', $page.url.pathname === '/')}
+						class={clsx(
+							'text-foreground/60 hover:text-foreground/80',
+							$page.url.pathname === '/' && 'text-foreground/90'
+						)}
 						href="/"
 					>
 						Home
@@ -26,7 +23,7 @@
 					<a
 						class={clsx(
 							'text-foreground/60 hover:text-foreground/80',
-							$page.url.pathname === '/finished'
+							$page.url.pathname === '/finished' && 'text-foreground/90'
 						)}
 						href="/finished"
 					>
@@ -35,9 +32,15 @@
 				</li>
 			</ul>
 		</nav>
+
+		<h1
+			class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
+		>
+			AITM: Task manager powered by AI
+		</h1>
 	</header>
 
-	<main>
+	<main class="pt-10">
 		<slot />
 	</main>
 </div>

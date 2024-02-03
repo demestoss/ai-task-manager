@@ -17,32 +17,34 @@
 	>();
 </script>
 
-<Card>
+<Card class="flex">
 	{#if category}
 		<TaskIcon {category} />
 	{/if}
 
-	<CardHeader>
-		<div class="flex justify-between">
-			<CardTitle tag="h3">
-				{name}
-			</CardTitle>
+	<div class="grow">
+		<CardHeader>
+			<div class="flex justify-between">
+				<CardTitle tag="h3">
+					{name}
+				</CardTitle>
 
-			<span class="text-sm text-muted-foreground">
-				spend {getDaysDiffTimestamp(createdAt, resolutionDate) || 1} days
-			</span>
-		</div>
-	</CardHeader>
+				<span class="text-sm text-muted-foreground">
+					spend {getDaysDiffTimestamp(createdAt, resolutionDate) || 1} days
+				</span>
+			</div>
+		</CardHeader>
 
-	<CardContent class="space-y-3">
-		<FinishedTaskDates {dueDate} {createdAt} {resolutionDate} />
-	</CardContent>
+		<CardContent class="space-y-3">
+			<FinishedTaskDates {dueDate} {createdAt} {resolutionDate} />
+		</CardContent>
 
-	<CardFooter class="flex justify-center">
-		{#if priority}
-			<TaskPriority {priority} />
-		{/if}
+		<CardFooter class="flex justify-between">
+			{#if priority}
+				<TaskPriority {priority} />
+			{/if}
 
-		<Button type="button" variant="default" onclick={restore}>Restore</Button>
-	</CardFooter>
+			<Button type="button" variant="default" onclick={restore}>Restore</Button>
+		</CardFooter>
+	</div>
 </Card>
