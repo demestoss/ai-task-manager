@@ -1,7 +1,7 @@
 <script lang="ts">
-	import FinishedTaskDates from '$lib/components/finished-task/FinishedTaskDates.svelte';
-	import TaskIcon from '$lib/components/task/TaskIcon.svelte';
-	import TaskPriority from '$lib/components/task/TaskPriority.svelte';
+	import FinishedTaskDates from './finished-task-dates.svelte';
+	import TaskIcon from '../task/task-icon.svelte';
+	import TaskPriority from '../task/task-priority.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardFooter, CardHeader } from '$lib/components/ui/card';
 	import { CardTitle } from '$lib/components/ui/card/index.js';

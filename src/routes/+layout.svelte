@@ -2,7 +2,10 @@
 	import '../app.pcss';
 	import { clsx } from 'clsx';
 	import { page } from '$app/stores';
+	import { Toaster } from '$lib/components/ui/sonner';
 </script>
+
+<Toaster />
 
 <div class="container">
 	<header class="flex justify-between items-center">

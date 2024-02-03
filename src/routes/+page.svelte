@@ -7,6 +7,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { TaskCard } from '$lib/components/task';
 	import { CardFooter } from '$lib/components/ui/card/index.js';
+	import { toast } from 'svelte-sonner';
 
 	let { data } = $props();
 	const client = makeClient(fetch);
@@ -14,13 +15,33 @@
 	let isLoading = $state(false);
 	let taskName = $state('');
 
+	async function handleRestore(id: string) {
+		try {
+			await client.v1.tasks[':id'].restore.$post({
+				param: { id }
+			});
+			await invalidate(client.v1.tasks.$url());
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
 	async function handleRemove(id: string) {
 		try {
 			isLoading = true;
 			await client.v1.tasks[':id'].$delete({
 				param: { id }
 			});
-			await invalidate(client.v1.tasks.$url());
+			await Promise.all([
+				invalidate(client.v1.tasks.$url()),
+				toast.success('The task was successfully deleted', {
+					description: 'Do you wnt to restore it?',
+					action: {
+						label: 'Undo',
+						onClick: () => handleRestore(id)
+					}
+				})
+			]);
 		} catch (e) {
 			console.error(e);
 		} finally {

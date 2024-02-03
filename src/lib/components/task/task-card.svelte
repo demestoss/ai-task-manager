@@ -8,10 +8,10 @@
 		CardTitle
 	} from '$lib/components/ui/card/index.js';
 	import type { TaskViewModel } from '$lib/server/modules/task/model';
-	import TaskIcon from '$lib/components/task/TaskIcon.svelte';
+	import TaskIcon from './task-icon.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import TaskPriority from '$lib/components/task/TaskPriority.svelte';
-	import TaskDueDate from '$lib/components/task/TaskDueDate.svelte';
+	import TaskPriority from './task-priority.svelte';
+	import TaskDueDate from './task-due-date.svelte';
 
 	type Events = {
 		remove: () => void;
