@@ -7,6 +7,6 @@
 	let { ...props } = $props<Props>();
 </script>
 
-<p {...props} class={cn('text-sm text-muted-foreground', props.class)}>
+<p {...props} class={cn('text-sm text-muted-foreground text-wrap break-all', props.class)}>
 	<slot />
 </p>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
 	import { FinishedTaskCard } from '$lib/components/finished-task';
+	import { formatDate } from '$lib/date';
 	import { makeClient } from '$lib/make-client';
 
 	let { data } = $props();
@@ -26,11 +27,16 @@
 		You haven't finished any task yet. Let's work on it!
 	</p>
 {:else}
-	<ul class="space-y-2">
-		{#each data.tasks as task (task.id)}
-			<li>
-				<FinishedTaskCard {...task} restore={() => handleRestore(task.id)} />
-			</li>
-		{/each}
-	</ul>
+	{#each data.tasks as taskGroup (taskGroup.date)}
+		<ul class="space-y-4 mb-6">
+			<p class="text-foreground text-xl">
+				{formatDate(new Date(taskGroup.date), 'D MMM, YYYY')}
+			</p>
+			{#each taskGroup.list as task (task.id)}
+				<li>
+					<FinishedTaskCard {...task} restore={() => handleRestore(task.id)} />
+				</li>
+			{/each}
+		</ul>
+	{/each}
 {/if}

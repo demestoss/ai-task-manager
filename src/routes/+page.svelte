@@ -53,10 +53,8 @@
 			await client.v1.tasks[':id'].finish.$post({
 				param: { id }
 			});
-			await Promise.all([
-				invalidate(client.v1.tasks.$url()),
-				invalidate(client.v1['finished-tasks'].$url())
-			]);
+			await invalidate(client.v1.tasks.$url());
+			await invalidate(client.v1['finished-tasks'].$url());
 		} catch (e) {
 			console.error(e);
 		} finally {

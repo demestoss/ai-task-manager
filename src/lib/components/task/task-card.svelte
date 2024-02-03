@@ -53,8 +53,8 @@
 			{/if}
 
 			<div class="space-x-3">
-				<Button type="button" variant="default" onclick={finish}>Finish</Button>
 				<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
+				<Button type="button" variant="default" onclick={finish}>Finish</Button>
 			</div>
 		</CardFooter>
 	</div>

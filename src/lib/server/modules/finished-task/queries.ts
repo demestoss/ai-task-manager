@@ -2,12 +2,16 @@ import type { DatabasePool } from '$lib/server/db/database';
 import { type FinishedTaskDataModel, tasks } from '$lib/server/db/schema';
 import { DataError } from '$lib/server/errors/DataError';
 import { mapTaskToDomainModel } from '$lib/server/modules/task/queries';
-import { eq, isNotNull } from 'drizzle-orm';
+import { desc, eq, isNotNull } from 'drizzle-orm';
 import type { FinishedTask } from './model';
 import type { Task, TaskId } from '../task/model';
 
 export async function getAllFinishedTasks(db: DatabasePool): Promise<FinishedTask[]> {
-	const result = await db.select().from(tasks).where(isNotNull(tasks.resolutionDate));
+	const result = await db
+		.select()
+		.from(tasks)
+		.where(isNotNull(tasks.resolutionDate))
+		.orderBy(desc(tasks.resolutionDate));
 
 	return result.map(mapToDomainModel);
 }
