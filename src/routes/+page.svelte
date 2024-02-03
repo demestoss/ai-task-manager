@@ -34,8 +34,10 @@
 			await client.v1.tasks[':id'].finish.$post({
 				param: { id }
 			});
-			await invalidate(client.v1.tasks.$url());
-			await invalidate(client.v1['finished-tasks'].$url());
+			await Promise.all([
+				invalidate(client.v1.tasks.$url()),
+				invalidate(client.v1['finished-tasks'].$url())
+			]);
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -43,12 +45,6 @@
 		}
 	}
 </script>
-
-<h1
-	class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
->
-	AITM: The best task manager powered by AI
-</h1>
 
 <Card class="mb-10">
 	<form method="POST" use:enhance>
