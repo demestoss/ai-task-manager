@@ -11,17 +11,18 @@ export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void
 	await queries.deleteTaskById(id, db);
 }
 
-type CreateTaskInput = Omit<Task, 'id'>;
+type CreateTaskInput = Omit<Task, 'id' | 'createdAt'>;
 
 export async function createTask(newTask: CreateTaskInput, db: DatabasePool): Promise<Task> {
 	const task: Task = {
 		...(await makeTaskPrediction(newTask)),
-		id: crypto.randomUUID()
+		id: crypto.randomUUID(),
+		createdAt: new Date().getTime(),
 	};
 	return queries.createTask(task, db);
 }
 
-type UpdateTaskInput = Omit<Task, 'id'>;
+type UpdateTaskInput = Omit<Task, 'id' | 'createdAt'>;
 
 export async function updateTaskById(
 	id: TaskId,

@@ -1,11 +1,5 @@
-export type Timestamp = number;
-
 function getMonth(date: Date) {
 	return new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-}
-
-export function dateFromTimestamp(timestamp: Timestamp): Date {
-	return new Date(timestamp);
 }
 
 export function formatDate(date: Date) {
@@ -26,4 +20,22 @@ export function addDays(addTo: Date, days: number): Date {
 	const date = new Date(addTo.valueOf());
 	date.setDate(date.getDate() + days);
 	return date;
+}
+
+export type Timestamp = number;
+
+export function dateFromTimestamp(timestamp: Timestamp): Date {
+	return new Date(timestamp);
+}
+
+export function formatTimestamp(timestamp: Timestamp): string {
+	return formatDate(dateFromTimestamp(timestamp));
+}
+
+export function isFutureTimestamp(date: Timestamp): boolean {
+	return isFutureDate(dateFromTimestamp(date));
+}
+
+export function getDaysDiffTimestamp(from: Timestamp, to: Timestamp): number {
+	return getDaysDiff(dateFromTimestamp(from), dateFromTimestamp(to));
 }

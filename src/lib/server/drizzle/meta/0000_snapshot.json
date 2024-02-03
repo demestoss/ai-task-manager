@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "a8c4cfd8-b0a2-4f2e-abec-914a6b8011e2",
+  "id": "7ce179bd-24a3-44ff-a804-19f9bea8a0ac",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "tasks": {
@@ -35,6 +35,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "due_date": {
           "name": "due_date",
           "type": "integer",
@@ -49,11 +56,11 @@
           "notNull": false,
           "autoincrement": false
         },
-        "category": {
-          "name": "category",
-          "type": "text",
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },

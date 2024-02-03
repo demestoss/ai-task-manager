@@ -7,7 +7,7 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card/index.js';
-	import type { Task } from '$lib/server/modules/task/model';
+	import type { TaskViewModel } from '$lib/server/modules/task/model';
 	import TaskIcon from '$lib/components/task/TaskIcon.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import TaskPriority from '$lib/components/task/TaskPriority.svelte';
@@ -18,12 +18,14 @@
 		finish: () => void;
 	};
 
-	let { name, category, description, dueDate, priority, remove, finish } = $props<Task & Events>();
+	let { name, category, description, dueDate, priority, remove, finish } = $props<
+		TaskViewModel & Events
+	>();
 </script>
 
 <Card class="flex">
 	{#if category}
-			<TaskIcon {category} />
+		<TaskIcon {category} />
 	{/if}
 
 	<div class="grow">
@@ -40,17 +42,20 @@
 		</CardHeader>
 
 		<CardContent class="space-y-3">
-			{#if priority}
-				<TaskPriority {priority} />
-			{/if}
 			<CardDescription>
 				{description}
 			</CardDescription>
 		</CardContent>
 
-		<CardFooter class="flex justify-end space-x-3">
-			<Button type="button" variant="default" onclick={finish}>Finish</Button>
-			<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
+		<CardFooter class="flex justify-between space-x-3">
+			{#if priority}
+				<TaskPriority {priority} />
+			{/if}
+
+			<div class="space-x-3">
+				<Button type="button" variant="default" onclick={finish}>Finish</Button>
+				<Button type="button" variant="destructive" onclick={remove}>Delete</Button>
+			</div>
 		</CardFooter>
 	</div>
 </Card>

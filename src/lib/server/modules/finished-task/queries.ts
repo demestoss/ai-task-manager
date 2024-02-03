@@ -29,7 +29,7 @@ export async function updateTaskResolutionDate(
 ): Promise<void> {
 	const result = await db
 		.update(tasks)
-		.set({ resolutionDate: date })
+		.set({ resolutionDate: date.getTime() })
 		.where(eq(tasks.id, id))
 		.returning({ id: tasks.id });
 

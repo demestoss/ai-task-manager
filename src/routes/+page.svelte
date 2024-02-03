@@ -35,6 +35,7 @@
 				param: { id }
 			});
 			await invalidate(client.v1.tasks.$url());
+			await invalidate(client.v1['finished-tasks'].$url());
 		} catch (e) {
 			console.error(e);
 		} finally {

@@ -1,4 +1,4 @@
-import { addDays, getDaysDiff, isFutureDate } from '$lib/date';
+import { addDays, getDaysDiffTimestamp, isFutureTimestamp } from '$lib/date';
 import type { DatabasePool } from '../../db/database';
 import { updateTask } from '../task/queries';
 import type { Task, TaskId } from '../task/model';
@@ -18,9 +18,9 @@ export async function restoreFinishedTask(id: TaskId, db: DatabasePool): Promise
 	const { resolutionDate } = await queries.getFinishedTask(id, db);
 
 	let task = await queries.restoreTask(id, db);
-	if (task.dueDate && !isFutureDate(task.dueDate)) {
-		const daysDiff = getDaysDiff(task.createdAt, resolutionDate);
-		const dueDate = addDays(new Date(), daysDiff);
+	if (task.dueDate && !isFutureTimestamp(task.dueDate)) {
+		const daysDiff = getDaysDiffTimestamp(task.createdAt, resolutionDate);
+		const dueDate = addDays(new Date(), daysDiff).getTime();
 		task = await updateTask(id, { dueDate }, db);
 	}
 	return task;

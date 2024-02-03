@@ -31,15 +31,18 @@ export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void
 }
 
 export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
-	const result = await db.insert(tasks).values(mapToDataModel(task)).returning({
-		id: tasks.id,
-		name: tasks.name,
-		description: tasks.description,
-		priority: tasks.priority,
-		category: tasks.category,
-		dueDate: tasks.dueDate,
-		createdAt: tasks.createdAt
-	});
+	const result = await db
+		.insert(tasks)
+		.values({ ...task })
+		.returning({
+			id: tasks.id,
+			name: tasks.name,
+			description: tasks.description,
+			priority: tasks.priority,
+			category: tasks.category,
+			dueDate: tasks.dueDate,
+			createdAt: tasks.createdAt
+		});
 
 	if (result.length === 0) {
 		throw new DataError('creating-failed', 'Failed to create the task');
@@ -86,12 +89,5 @@ export function mapTaskToDomainModel(task: TaskDataModel): Task {
 		dueDate: task.dueDate ?? undefined,
 		priority: task.priority ?? undefined,
 		createdAt: task.createdAt
-	};
-}
-
-function mapToDataModel(task: Task) {
-	return {
-		...task,
-		dueDate: task.dueDate ?? null
 	};
 }

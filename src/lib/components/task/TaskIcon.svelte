@@ -28,18 +28,20 @@
 	}
 </script>
 
-<div class={cn(`border-l-4 ${getStyleByCategory()} pl-2 pr-2 pt-4 h-full rounded mr-[-12px]`)}>
-	{#if category === 'coding'}
-		<Code class="size-8" />
-	{:else if category === 'home'}
-		<Bath class="size-8" />
-	{:else if category === 'hobby'}
-		<Fish class="size-8" />
-	{:else if category === 'work'}
-		<Plane class="size-8" />
-	{:else if category === 'reading'}
-		<Book class="size-8" />
-	{:else if category === 'other'}
-		<ShieldQuestion class="size-8" />
-	{/if}
+<div class="mr-[-12px]">
+	<div class={cn(`border-l-4 ${getStyleByCategory()} pl-2 pr-2 pt-4 h-full rounded`)}>
+		{#if category === 'coding'}
+			<Code class="size-8" />
+		{:else if category === 'home'}
+			<Bath class="size-8" />
+		{:else if category === 'hobby'}
+			<Fish class="size-8" />
+		{:else if category === 'work'}
+			<Plane class="size-8" />
+		{:else if category === 'reading'}
+			<Book class="size-8" />
+		{:else if category === 'other'}
+			<ShieldQuestion class="size-8" />
+		{/if}
+	</div>
 </div>

@@ -1,22 +1,19 @@
-import { sql } from 'drizzle-orm';
 import { integer, text } from 'drizzle-orm/sqlite-core';
 import { sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tasks = sqliteTable('tasks', {
 	id: text('id').primaryKey().unique(),
 	name: text('name').notNull(),
-	description: text('description'),
+	description: text('description', { mode: 'text' }),
 	priority: text('priority', {
-		enum: ['useless', 'low', 'medium', 'high']
+		enum: ['useless', 'low', 'medium', 'high'],
 	}),
 	category: text('category', {
 		enum: ['work', 'coding', 'reading', 'home', 'hobby', 'other']
 	}),
-	dueDate: integer('due_date', { mode: 'timestamp_ms' }),
-	resolutionDate: integer('resolution_date', { mode: 'timestamp_ms' }),
-	createdAt: integer('created_at', { mode: 'timestamp_ms' })
-		.default(sql`(unixepoch('subsecond') * 1000)`)
-		.notNull()
+	dueDate: integer('due_date'),
+	resolutionDate: integer('resolution_date'),
+	createdAt: integer('created_at').notNull()
 });
 
 export type TaskDataModel = Omit<typeof tasks.$inferSelect, 'resolutionDate'>;
