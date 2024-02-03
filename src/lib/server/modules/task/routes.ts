@@ -37,6 +37,12 @@ export const taskRouter = new Hono<{ Variables: RouterContext }>()
 		await model.deleteTaskById(id, db);
 		return c.json(Responder.success('Task removed successfully'), 201);
 	})
+	.post(':id/restore', zValidator('param', ask.TaskParam), async (c) => {
+		const { id } = c.req.valid('param');
+		const db = c.get('db');
+		await model.restoreTaskById(id, db);
+		return c.json(Responder.success('Task was successfully restored'), 201);
+	})
 	.post(':id/finish', zValidator('param', ask.TaskParam), async (c) => {
 		const { id } = c.req.valid('param');
 		const db = c.get('db');

@@ -8,7 +8,7 @@
 
 	async function handleRestore(id: string) {
 		try {
-			await client.v1['finished-tasks'][':id'].restore.$post({
+			await client.v1['finished-tasks'][':id'].return.$post({
 				param: { id }
 			});
 			await Promise.all([

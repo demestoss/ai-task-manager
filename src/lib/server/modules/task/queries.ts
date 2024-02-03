@@ -1,5 +1,4 @@
-import { eq, isNull } from 'drizzle-orm';
-import { z } from 'zod';
+import { and, eq, isNull } from 'drizzle-orm';
 import { type TaskDataModel, tasks } from '../../db/schema';
 import type { DatabasePool } from '../../db/database';
 import { Task, type TaskId } from './model';
@@ -17,7 +16,7 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
 			createdAt: tasks.createdAt
 		})
 		.from(tasks)
-		.where(isNull(tasks.resolutionDate));
+		.where(and(isNull(tasks.resolutionDate), isNull(tasks.deletedAt)));
 
 	return result.map(mapTaskToDomainModel);
 }
@@ -28,6 +27,20 @@ export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void
 	if (result.length === 0) {
 		throw new DataError('not-found', "Task doesn't exists");
 	}
+}
+
+export async function softDeleteTaskById(id: TaskId, db: DatabasePool): Promise<TaskId> {
+	const result = await db
+		.update(tasks)
+		.set({ deletedAt: new Date().getTime() })
+		.where(eq(tasks.id, id))
+		.returning({ id: tasks.id });
+
+	if (result.length === 0) {
+		throw new DataError('not-found', "Task doesn't exists");
+	}
+
+	return result[0].id;
 }
 
 export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
@@ -51,8 +64,7 @@ export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
 	return mapTaskToDomainModel(result[0]);
 }
 
-export const TaskUpdateInput = Task.omit({ id: true, createdAt: true });
-export type TaskUpdateInput = Partial<z.infer<typeof TaskUpdateInput>>;
+export type TaskUpdateInput = Partial<TaskDataModel>;
 
 export async function updateTask(
 	id: TaskId,
@@ -80,7 +92,7 @@ export async function updateTask(
 	return mapTaskToDomainModel(result[0]);
 }
 
-export function mapTaskToDomainModel(task: TaskDataModel): Task {
+export function mapTaskToDomainModel(task: Omit<TaskDataModel, 'deletedAt'>): Task {
 	return {
 		id: task.id,
 		name: task.name,

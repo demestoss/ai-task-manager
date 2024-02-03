@@ -7,8 +7,8 @@ export async function getAllTasks(db: DatabasePool): Promise<Task[]> {
 	return queries.queryAllTasks(db);
 }
 
-export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void> {
-	await queries.deleteTaskById(id, db);
+export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<TaskId> {
+	return await queries.softDeleteTaskById(id, db);
 }
 
 type CreateTaskInput = Omit<Task, 'id' | 'createdAt'>;
@@ -17,7 +17,7 @@ export async function createTask(newTask: CreateTaskInput, db: DatabasePool): Pr
 	const task: Task = {
 		...(await makeTaskPrediction(newTask)),
 		id: crypto.randomUUID(),
-		createdAt: new Date().getTime(),
+		createdAt: new Date().getTime()
 	};
 	return queries.createTask(task, db);
 }
@@ -30,4 +30,8 @@ export async function updateTaskById(
 	db: DatabasePool
 ): Promise<Task> {
 	return queries.updateTask(id, updatedTask, db);
+}
+
+export function restoreTaskById(id: TaskId, db: DatabasePool): Promise<Task> {
+	return queries.updateTask(id, { deletedAt: null }, db);
 }

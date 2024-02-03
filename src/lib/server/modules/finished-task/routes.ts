@@ -12,7 +12,7 @@ export const finishedTasksRouter = new Hono<{ Variables: RouterContext }>()
 		const finishedTasks = await getAllFinishedTasks(db);
 		return c.json<FinishedTask[]>(finishedTasks);
 	})
-	.post('/:id/restore', zValidator('param', TaskParam), async (c) => {
+	.post('/:id/return', zValidator('param', TaskParam), async (c) => {
 		const db = c.get('db');
 		const { id } = c.req.valid('param');
 		const restoredTask = await restoreFinishedTask(id, db);

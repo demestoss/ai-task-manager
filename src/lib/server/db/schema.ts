@@ -13,7 +13,8 @@ export const tasks = sqliteTable('tasks', {
 	}),
 	dueDate: integer('due_date'),
 	resolutionDate: integer('resolution_date'),
-	createdAt: integer('created_at').notNull()
+	createdAt: integer('created_at').notNull(),
+	deletedAt: integer('deleted_at'),
 });
 
 export type TaskDataModel = Omit<typeof tasks.$inferSelect, 'resolutionDate'>;
