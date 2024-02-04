@@ -1,0 +1,23 @@
+{
+  "name": "@repo/api",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "./src/index.ts",
+  "main": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "dev": "bun run src/serve.ts"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*"
+  },
+  "dependencies": {
+    "@repo/db": "workspace:*",
+    "@repo/date-utils": "workspace:*",
+    "@hono/zod-validator": "^0.1.11",
+    "hono": "^3.12.10",
+    "zod": "^3.22.4",
+    "drizzle-orm": "^0.29.3",
+    "@libsql/client": "^0.4.3"
+  }
+}
