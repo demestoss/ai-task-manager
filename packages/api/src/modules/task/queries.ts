@@ -8,7 +8,9 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
   try {
     const result = await db
       .select()
-      .from(tasks).all();
+      .from(tasks)
+      .where(and(isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
+      .all();
 
     return result.map(mapTaskToDomainModel);
   } catch (error) {

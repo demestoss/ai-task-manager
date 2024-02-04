@@ -2,7 +2,7 @@ import type { DatabasePool } from '@repo/db';
 import { type FinishedTaskDataModel, tasks } from '@repo/db';
 import { DataError } from '../../errors/DataError';
 import { mapTaskToDomainModel } from '../task/queries';
-import { desc, eq, isNotNull } from 'drizzle-orm';
+import { and, desc, eq, isNotNull, isNull } from 'drizzle-orm';
 import type { FinishedTask } from './model';
 import type { Task, TaskId } from '../task/model';
 
@@ -10,7 +10,7 @@ export async function getAllFinishedTasks(db: DatabasePool): Promise<FinishedTas
 	const result = await db
 		.select()
 		.from(tasks)
-		.where(isNotNull(tasks.resolutionDate))
+		.where(and(isNotNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
 		.orderBy(desc(tasks.resolutionDate));
 
 	return result.map(mapToDomainModel);
