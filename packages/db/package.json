@@ -1,0 +1,20 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "./src/index.ts",
+  "main": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "gen": "drizzle-kit generate:sqlite",
+    "migrate": "bun run src/migrate.ts"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "drizzle-kit": "^0.20.14"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.4.3",
+    "drizzle-orm": "^0.29.3"
+  }
+}
