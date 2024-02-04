@@ -19,6 +19,7 @@
 							'text-foreground/60 hover:text-foreground/80',
 							$page.url.pathname === '/' && 'text-foreground/90'
 						)}
+						data-sveltekit-preload-data="tap"
 						href="/"
 					>
 						Home
@@ -30,6 +31,7 @@
 							'text-foreground/60 hover:text-foreground/80',
 							$page.url.pathname === '/finished' && 'text-foreground/90'
 						)}
+						data-sveltekit-preload-data="tap"
 						href="/finished"
 					>
 						Finished Tasks
