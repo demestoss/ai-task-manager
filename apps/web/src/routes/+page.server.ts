@@ -7,7 +7,7 @@ export const actions = {
 		const client = makeClient(fetch);
 		const form = await request.formData();
 		const data = TaskCreateInput.parse(Object.fromEntries(form));
-		const response = await client.v1.tasks.$post({
+		const response = await client.api.v1.tasks.$post({
 			json: data
 		});
 

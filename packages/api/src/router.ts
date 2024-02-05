@@ -1,17 +1,15 @@
-import type { RouterContext } from './context';
+import type { HonoContext  } from './context';
 import { getDatabaseClient } from '@repo/db';
 import { finishedTasksRouter } from './modules/finished-task/routes';
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { taskRouter } from './modules/task/routes';
 import { parseError } from './errors/parseError';
-// import { prettyJSON } from 'hono/pretty-json';
 import { env } from 'hono/adapter';
 
-const app = new Hono().get('/ping', (c) => c.text('pong'));
+const app = new Hono<HonoContext>().get('/ping', (c) => c.text('pong'));
 
 app.use('*', logger());
-// app.use('*', prettyJSON());
 
 app.notFound((c) => c.json({ message: 'Not Found', ok: false }, 404));
 
@@ -21,25 +19,24 @@ app.onError((err, c) => {
   return c.text(text, status);
 });
 
-const apiRouter = new Hono<{ Variables: RouterContext }>().use('*', async (c, next) => {
-  const { DATABASE_URL, DATABASE_AUTH_TOKEN } = env<{
-    DATABASE_URL?: string;
-    DATABASE_AUTH_TOKEN?: string;
-    // @ts-ignore
-  }>(c);
+const apiRoutes = app
+  .use('*', async (c, next) => {
+    // const session = c.
 
-  const db = getDatabaseClient(DATABASE_URL, DATABASE_AUTH_TOKEN);
-  c.set('db', db);
+    const { DATABASE_URL, DATABASE_AUTH_TOKEN } = env<{
+      DATABASE_URL?: string;
+      DATABASE_AUTH_TOKEN?: string;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+    }>(c);
 
-  await next();
-});
+    const db = getDatabaseClient(DATABASE_URL, DATABASE_AUTH_TOKEN);
+    c.set('db', db);
 
-const apiRoutes = apiRouter.route(
-  '/v1',
-  new Hono().route('/tasks', taskRouter).route('/finished-tasks', finishedTasksRouter)
-);
-
-app.route('/api', apiRouter);
+    await next();
+  })
+  .route('/api/v1/tasks', taskRouter)
+  .route('/api/v1/finished-tasks', finishedTasksRouter);
 
 export default app;
 export type ApiRouter = typeof apiRoutes;

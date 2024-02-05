@@ -1,4 +1,4 @@
-import type { RouterContext } from '../../context';
+import type { HonoContext } from '../../context';
 import { Hono } from 'hono';
 import { Task } from './model';
 import { zValidator } from '@hono/zod-validator';
@@ -7,7 +7,7 @@ import * as model from './service';
 import * as ask from './ask';
 import { createFinishedTask } from '../finished-task/service';
 
-export const taskRouter = new Hono<{ Variables: RouterContext }>()
+export const taskRouter = new Hono<HonoContext>()
 	.get('/', async (c) => {
 		const db = c.get('db');
 		const tasks = await model.getAllTasks(db);

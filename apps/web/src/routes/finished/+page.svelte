@@ -9,12 +9,12 @@
 
 	async function handleRestore(id: string) {
 		try {
-			await client.v1['finished-tasks'][':id'].return.$post({
+			await client.api.v1['finished-tasks'][':id'].return.$post({
 				param: { id }
 			});
 			await Promise.all([
-				invalidate(client.v1.tasks.$url()),
-				invalidate(client.v1['finished-tasks'].$url())
+				invalidate(client.api.v1.tasks.$url()),
+				invalidate(client.api.v1['finished-tasks'].$url())
 			]);
 		} catch (e) {
 			console.error(e);

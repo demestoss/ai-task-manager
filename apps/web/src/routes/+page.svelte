@@ -17,10 +17,10 @@
 
 	async function handleRestore(id: string) {
 		try {
-			await client.v1.tasks[':id'].restore.$post({
+			await client.api.v1.tasks[':id'].restore.$post({
 				param: { id }
 			});
-			await invalidate(client.v1.tasks.$url());
+			await invalidate(client.api.v1.tasks.$url());
 		} catch (e) {
 			console.error(e);
 		}
@@ -29,10 +29,10 @@
 	async function handleRemove(id: string) {
 		try {
 			isLoading = true;
-			await client.v1.tasks[':id'].$delete({
+			await client.api.v1.tasks[':id'].$delete({
 				param: { id }
 			});
-			await invalidate(client.v1.tasks.$url());
+			await invalidate(client.api.v1.tasks.$url());
 			toast.success('The task was successfully deleted', {
 				description: 'Do you wnt to restore it?',
 				action: {
@@ -50,11 +50,11 @@
 	async function handleFinish(id: string) {
 		try {
 			isLoading = true;
-			await client.v1.tasks[':id'].finish.$post({
+			await client.api.v1.tasks[':id'].finish.$post({
 				param: { id }
 			});
-			await invalidate(client.v1.tasks.$url());
-			await invalidate(client.v1['finished-tasks'].$url());
+			await invalidate(client.api.v1.tasks.$url());
+			await invalidate(client.api.v1['finished-tasks'].$url());
 		} catch (e) {
 			console.error(e);
 		} finally {

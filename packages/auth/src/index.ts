@@ -3,6 +3,8 @@ import GitHub from "@auth/sveltekit/providers/github"
 import { getDatabaseClient, tableCreator } from '@repo/db'
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 
+export type { Session } from "@auth/sveltekit"
+
 declare module '@sveltejs/kit' {
     namespace App {
         interface Platform {
