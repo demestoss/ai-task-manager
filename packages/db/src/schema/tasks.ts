@@ -1,7 +1,7 @@
 import { integer, text } from 'drizzle-orm/sqlite-core';
-import { sqliteTable } from 'drizzle-orm/sqlite-core';
+import { tableCreator } from './table';
 
-export const tasks = sqliteTable('tasks', {
+export const tasks = tableCreator('tasks', {
 	id: text('id').primaryKey().unique(),
 	name: text('name').notNull(),
 	description: text('description', { mode: 'text' }),

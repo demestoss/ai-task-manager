@@ -1,14 +1,15 @@
-import { and, eq, isNull } from 'drizzle-orm';
-import { type TaskDataModel, tasks } from '@repo/db';
+import { type TaskDataModel, schema, and, eq, isNull } from '@repo/db';
 import type { DatabasePool } from '@repo/db';
 import { Task, type TaskId } from './model';
 import { DataError } from '../../errors/DataError';
+
+const { tasks } = schema;
 
 export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
   try {
     const result = await db
       .select()
-      .from(tasks)
+      .from(schema.tasks)
       .where(and(isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
       .all();
 
@@ -20,7 +21,7 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
 }
 
 export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void> {
-  const result = await db.delete(tasks).where(eq(tasks.id, id)).returning({ id: tasks.id });
+  const result = await db.delete(schema.tasks).where(eq(schema.tasks.id, id)).returning({ id: schema.tasks.id });
 
   if (result.length === 0) {
     throw new DataError('not-found', "Task doesn't exists");

@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "drizzle-kit": "^0.20.14"
+    "drizzle-kit": "^0.20.14",
+    "@auth/core": "^0.25.1"
   },
   "dependencies": {
     "@libsql/client": "^0.4.3",

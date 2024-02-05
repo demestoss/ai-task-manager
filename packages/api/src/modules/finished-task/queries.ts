@@ -1,10 +1,11 @@
 import type { DatabasePool } from '@repo/db';
-import { type FinishedTaskDataModel, tasks } from '@repo/db';
+import { type FinishedTaskDataModel, schema, and, desc, eq, isNotNull, isNull } from '@repo/db';
 import { DataError } from '../../errors/DataError';
 import { mapTaskToDomainModel } from '../task/queries';
-import { and, desc, eq, isNotNull, isNull } from 'drizzle-orm';
 import type { FinishedTask } from './model';
 import type { Task, TaskId } from '../task/model';
+
+const { tasks } = schema;
 
 export async function getAllFinishedTasks(db: DatabasePool): Promise<FinishedTask[]> {
 	const result = await db

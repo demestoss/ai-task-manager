@@ -1,2 +1,5 @@
+export { getDatabaseClient, type DatabasePool } from './database'
+
 export * from './schema'
-export * from './database'
+
+export * from 'drizzle-orm'

@@ -1,6 +1,6 @@
 import { drizzle as drizzleTurso, type LibSQLDatabase } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
-import * as schema from './schema';
+import { schema } from './schema';
 
 export type DatabasePool = LibSQLDatabase<typeof schema>;
 
@@ -12,7 +12,9 @@ function makeTursoDatabaseClient(url: string, authToken: string) {
   });
 }
 
-export function makeDatabaseClient(url?: string, authToken?: string) {
+let db: DatabasePool | null = null;
+
+export function getDatabaseClient(url?: string, authToken?: string) {
   if (!url) {
     throw new Error('Missing url parameter for database config');
   }
@@ -20,5 +22,9 @@ export function makeDatabaseClient(url?: string, authToken?: string) {
     throw new Error('Missing auth token parameter for database config');
   }
 
-  return makeTursoDatabaseClient(url, authToken);
+  if (!db) {
+    db = makeTursoDatabaseClient(url, authToken);
+  }
+
+  return db;
 }

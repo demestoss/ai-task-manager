@@ -1,0 +1,15 @@
+{
+  "name": "@repo/ai",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "./src/index.ts",
+  "main": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*"
+  },
+  "dependencies": {
+  }
+}
