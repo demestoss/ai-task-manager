@@ -48,6 +48,9 @@ importers:
       '@repo/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@repo/date-utils':
         specifier: workspace:*
         version: link:../../packages/date-utils

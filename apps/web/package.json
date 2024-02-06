@@ -19,6 +19,7 @@
     "svelte-sonner": "^0.3.11",
     "@repo/date-utils": "workspace:*",
     "@repo/api": "workspace:*",
+    "@repo/auth": "workspace:*",
     "hono": "^3.12.11"
   },
   "devDependencies": {
