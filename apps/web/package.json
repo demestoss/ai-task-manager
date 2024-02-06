@@ -19,7 +19,9 @@
     "svelte-sonner": "^0.3.11",
     "@repo/date-utils": "workspace:*",
     "@repo/api": "workspace:*",
-    "@repo/auth": "workspace:*",
+    "@auth/sveltekit": "^0.12.2",
+    "@auth/drizzle-adapter": "^0.6.0",
+    "@repo/db": "workspace:*",
     "hono": "^3.12.11"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "db:migrate": "turbo run migrate",
-    "db:gen": "turbo run gen",
+    "db:migrate": "dotenv -e .env -- turbo run migrate",
+    "db:gen": "dotenv -e .env -- turbo run gen",
     "dev:web": "dotenv -e .env -- turbo run dev --filter=web",
     "build:web": "dotenv -e .env -- turbo run build --filter=web",
     "dev:server": "dotenv -e .env -- turbo run dev --filter=server",

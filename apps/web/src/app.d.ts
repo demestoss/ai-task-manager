@@ -6,7 +6,16 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env: {
+				GITHUB_ID: string;
+				GITHUB_SECRET: string;
+				DATABASE_URL: string;
+				DATABASE_AUTH_TOKEN: string;
+				AUTH_SECRET: string;
+			};
+		}
+
 	}
 }
 

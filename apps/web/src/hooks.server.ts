@@ -1,4 +1,4 @@
-import { handle as authHandle } from '@repo/auth';
+import { handle as authHandle } from './auth';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
@@ -10,8 +10,6 @@ const authorization: Handle = async ({ event, resolve }) => {
 			redirect(303, '/login');
 		}
 	}
-
-
 
 	// If the request is still here, just proceed as normally
 	return resolve(event);

@@ -1,4 +1,4 @@
-import type { HonoContext  } from './context';
+import type { HonoContext } from './context';
 import { getDatabaseClient } from '@repo/db';
 import { finishedTasksRouter } from './modules/finished-task/routes';
 import { Hono } from 'hono';
@@ -22,6 +22,7 @@ app.onError((err, c) => {
 const apiRoutes = app
   .use('*', async (c, next) => {
     // const session = c.
+    console.log(c);
 
     const { DATABASE_URL, DATABASE_AUTH_TOKEN } = env<{
       DATABASE_URL?: string;

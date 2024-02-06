@@ -1,5 +1,5 @@
 <script>
-  import { SignIn } from '@repo/auth/components';
+import { SignIn } from '@auth/sveltekit/components';
 </script>
 
 <div class="flex-col flex items-center space-x-3">
