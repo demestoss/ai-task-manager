@@ -10,13 +10,13 @@ export const TaskCategory = z.enum(['work', 'coding', 'reading', 'home', 'hobby'
 export type TaskCategory = z.infer<typeof TaskCategory>;
 
 export const Task = z.object({
-	id: TaskId,
-	name: z.string().min(1).max(127),
-	description: z.string().min(1).max(2048).optional(),
-	priority: TaskPriority.optional(),
-	category: TaskCategory.optional(),
-	dueDate: z.number().optional(),
-	createdAt: z.number()
+  id: TaskId,
+  name: z.string().min(1).max(127),
+  description: z.string().min(1).max(2048).optional(),
+  priority: TaskPriority.optional(),
+  category: TaskCategory.optional(),
+  dueDate: z.number().optional(),
+  createdAt: z.number()
 });
 export type Task = z.infer<typeof Task>;
 
@@ -24,8 +24,8 @@ export const DueType = z.enum(['not-due', 'close-to-due', 'due-date', 'over-due'
 export type DueType = z.infer<typeof DueType>;
 
 export const TaskViewModel = Task.merge(
-	z.object({
-		dueType: DueType.optional()
-	})
+  z.object({
+    dueType: DueType.optional()
+  })
 );
 export type TaskViewModel = z.infer<typeof TaskViewModel>;

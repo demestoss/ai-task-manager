@@ -8,64 +8,64 @@ import type { Task, TaskId } from '../task/model';
 const { tasks } = schema;
 
 export async function getAllFinishedTasks(db: DatabasePool): Promise<FinishedTask[]> {
-	const result = await db
-		.select()
-		.from(tasks)
-		.where(and(isNotNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
-		.orderBy(desc(tasks.resolutionDate));
+  const result = await db
+    .select()
+    .from(tasks)
+    .where(and(isNotNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
+    .orderBy(desc(tasks.resolutionDate));
 
-	return result.map(mapToDomainModel);
+  return result.map(mapToDomainModel);
 }
 
 export async function getFinishedTask(id: TaskId, db: DatabasePool): Promise<FinishedTask> {
-	const result = await db.select().from(tasks).where(eq(tasks.id, id)).limit(1);
+  const result = await db.select().from(tasks).where(eq(tasks.id, id)).limit(1);
 
-	if (result.length === 0) {
-		throw new DataError('not-found', "Task doesn't exists");
-	}
+  if (result.length === 0) {
+    throw new DataError('not-found', "Task doesn't exists");
+  }
 
-	return mapToDomainModel(result[0]);
+  return mapToDomainModel(result[0]);
 }
 
 export async function updateTaskResolutionDate(
-	id: TaskId,
-	date: Date,
-	db: DatabasePool
+  id: TaskId,
+  date: Date,
+  db: DatabasePool
 ): Promise<void> {
-	const result = await db
-		.update(tasks)
-		.set({ resolutionDate: date.getTime() })
-		.where(eq(tasks.id, id))
-		.returning({ id: tasks.id });
+  const result = await db
+    .update(tasks)
+    .set({ resolutionDate: date.getTime() })
+    .where(eq(tasks.id, id))
+    .returning({ id: tasks.id });
 
-	if (result.length === 0) {
-		throw new DataError('not-found', "Task doesn't exists");
-	}
+  if (result.length === 0) {
+    throw new DataError('not-found', "Task doesn't exists");
+  }
 }
 
 export async function restoreTask(id: TaskId, db: DatabasePool): Promise<Task> {
-	const result = await db
-		.update(tasks)
-		.set({ resolutionDate: null })
-		.where(eq(tasks.id, id))
-		.returning();
+  const result = await db
+    .update(tasks)
+    .set({ resolutionDate: null })
+    .where(eq(tasks.id, id))
+    .returning();
 
-	if (result.length === 0) {
-		throw new DataError('not-found', "Task doesn't exists");
-	}
+  if (result.length === 0) {
+    throw new DataError('not-found', "Task doesn't exists");
+  }
 
-	return mapTaskToDomainModel(result[0]);
+  return mapTaskToDomainModel(result[0]);
 }
 
 function mapToDomainModel(task: FinishedTaskDataModel): FinishedTask {
-	return {
-		id: task.id,
-		name: task.name,
-		description: task.description ?? undefined,
-		category: task.category ?? undefined,
-		dueDate: task.dueDate ?? undefined,
-		priority: task.priority ?? undefined,
-		createdAt: task.createdAt,
-		resolutionDate: task.resolutionDate!
-	};
+  return {
+    id: task.id,
+    name: task.name,
+    description: task.description ?? undefined,
+    category: task.category ?? undefined,
+    dueDate: task.dueDate ?? undefined,
+    priority: task.priority ?? undefined,
+    createdAt: task.createdAt,
+    resolutionDate: task.resolutionDate!
+  };
 }

@@ -6,8 +6,11 @@
     "dev:web": "dotenv -e .env -- turbo run dev --filter=web",
     "build:web": "dotenv -e .env -- turbo run build --filter=web",
     "dev:server": "dotenv -e .env -- turbo run dev --filter=server",
-    "lint": "turbo run lint",
-    "format": "prettier --write ."
+    "lint": "bun run lint:check && bun run format:check",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier .",
+    "format:fix": "prettier --write ."
   },
   "devDependencies": {
     "eslint": "^8.56.0",

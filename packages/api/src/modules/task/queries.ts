@@ -16,12 +16,15 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
     return result.map(mapTaskToDomainModel);
   } catch (error) {
     console.log(error);
-    return []
+    return [];
   }
 }
 
 export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void> {
-  const result = await db.delete(schema.tasks).where(eq(schema.tasks.id, id)).returning({ id: schema.tasks.id });
+  const result = await db
+    .delete(schema.tasks)
+    .where(eq(schema.tasks.id, id))
+    .returning({ id: schema.tasks.id });
 
   if (result.length === 0) {
     throw new DataError('not-found', "Task doesn't exists");

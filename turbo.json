@@ -1,17 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDotEnv": [
-    ".env"
-  ],
+  "globalDotEnv": [".env"],
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".svelte-kit/**",
-        ".vercel/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": [".svelte-kit/**", ".vercel/**"]
     },
     "lint": {},
     "migrate": {},
@@ -21,11 +14,5 @@
       "persistent": true
     }
   },
-  "globalEnv": [
-    "DATABASE_URL",
-    "DATABASE_AUTH_TOKEN",
-    "GITHUB_ID",
-    "GITHUB_SECRET",
-    "AUTH_SECRET"
-  ]
+  "globalEnv": ["DATABASE_URL", "DATABASE_AUTH_TOKEN", "GITHUB_ID", "GITHUB_SECRET", "AUTH_SECRET"]
 }

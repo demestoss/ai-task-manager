@@ -15,7 +15,6 @@ declare global {
 				AUTH_SECRET: string;
 			};
 		}
-
 	}
 }
 

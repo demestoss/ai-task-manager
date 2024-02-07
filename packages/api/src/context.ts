@@ -6,4 +6,4 @@ export type RouterContext = {
   session: Session;
 };
 
-export type HonoContext = { Variables: RouterContext }
+export type HonoContext = { Variables: RouterContext };

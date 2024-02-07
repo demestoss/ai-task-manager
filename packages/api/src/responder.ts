@@ -1,24 +1,24 @@
 export type SuccessResponse = {
-	message: string
-}
+  message: string;
+};
 
 function successResponse(message: string): SuccessResponse {
-	return {
-		message
-	}
+  return {
+    message
+  };
 }
 
 export type ErrorResponse = {
-	error: string
-}
+  error: string;
+};
 
 function errorResponse(message: string): ErrorResponse {
-	return {
-		error: message,
-	}
+  return {
+    error: message
+  };
 }
 
 export const Responder = {
-	success: successResponse,
-	error: errorResponse,
-}
+  success: successResponse,
+  error: errorResponse
+};
