@@ -3,7 +3,7 @@
 </script>
 
 <div class="flex-col flex items-center space-y-8">
-	<p class="scroll-m-20 text-xl font-semibold tracking-tight">Please Sign in</p>
+	<p class="scroll-m-20 text-xl font-semibold tracking-tight">Please Sign In</p>
 
 	<button
 		type="button"

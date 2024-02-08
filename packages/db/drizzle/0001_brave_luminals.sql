@@ -2,7 +2,7 @@ CREATE TABLE `account` (
 	`userId` text NOT NULL,
 	`type` text NOT NULL,
 	`provider` text NOT NULL,
-	`providerAccountId` text NOT NULL,
+	`provider_account_id` text NOT NULL,
 	`refresh_token` text,
 	`access_token` text,
 	`expires_at` integer,
@@ -10,12 +10,12 @@ CREATE TABLE `account` (
 	`scope` text,
 	`id_token` text,
 	`session_state` text,
-	PRIMARY KEY(`provider`, `providerAccountId`),
+	PRIMARY KEY(`provider`, `provider_account_id`),
 	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `session` (
-	`sessionToken` text PRIMARY KEY NOT NULL,
+	`session_token` text PRIMARY KEY NOT NULL,
 	`userId` text NOT NULL,
 	`expires` integer NOT NULL,
 	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
@@ -25,7 +25,8 @@ CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text,
 	`email` text NOT NULL,
-	`emailVerified` integer,
+	`email_verified` integer,
+	`ai_enabled` integer DEFAULT false,
 	`image` text
 );
 --> statement-breakpoint
