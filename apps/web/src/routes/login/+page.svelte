@@ -7,7 +7,7 @@
 
 	<button
 		type="button"
-		onclick={() => signIn('github')}
+		onclick={() => signIn('github', { callbackUrl: '/tasks' })}
 		class="py-2 px-4 max-w-md flex justify-center items-center bg-primary hover:bg-primary/90 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
 	>
 		<svg

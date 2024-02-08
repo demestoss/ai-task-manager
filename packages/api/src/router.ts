@@ -6,6 +6,7 @@ import { logger } from 'hono/logger';
 import { taskRouter } from './modules/task/routes';
 import { parseError } from './errors/parseError';
 import { env } from 'hono/adapter';
+import { getCookie } from 'hono/cookie'
 
 const app = new Hono<HonoContext>().get('/ping', (c) => c.text('pong'));
 
@@ -22,7 +23,7 @@ app.onError((err, c) => {
 const apiRoutes = app
   .use('*', async (c, next) => {
     // const session = c.
-    console.log(c);
+    console.log(c.cookie, getCookie(c, 'session'));
 
     const { DATABASE_URL, DATABASE_AUTH_TOKEN } = env<{
       DATABASE_URL?: string;
