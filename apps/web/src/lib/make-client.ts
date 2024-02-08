@@ -11,7 +11,7 @@ export const makeClient = (fetch: Window['fetch']) => {
 		return browserClient;
 	}
 
-	const client = hc<ApiRouter>(origin + '/api', {
+	const client = hc<ApiRouter>(origin, {
 		fetch
 	});
 

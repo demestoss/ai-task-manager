@@ -1,7 +1,7 @@
 <script>
 	import { clsx } from 'clsx';
 	import { page } from '$app/stores';
-	import { SignOut } from '@repo/auth/components';
+	import { signOut } from '@auth/sveltekit/client';
 </script>
 
 <header class="flex justify-between items-center">
@@ -17,10 +17,10 @@
 				<a
 					class={clsx(
 						'text-foreground/60 hover:text-foreground/80',
-						$page.url.pathname === '/tasks/current' && 'text-foreground/90'
+						$page.url.pathname === '/tasks' && 'text-foreground/90'
 					)}
 					data-sveltekit-preload-data="tap"
-					href="/tasks/current"
+					href="/tasks"
 				>
 					Home
 				</a>
@@ -37,10 +37,18 @@
 					Finished Tasks
 				</a>
 			</li>
+
+			<li>
+				<button
+					type="button"
+					onclick={() => signOut({ callbackUrl: '/login' })}
+					class={'text-foreground/60 hover:text-foreground/80'}
+				>
+					Sign Out
+				</button>
+			</li>
 		</ul>
 	</nav>
-
-	<SignOut />
 </header>
 
 <main class="pt-10">

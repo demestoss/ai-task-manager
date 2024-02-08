@@ -7,6 +7,6 @@
 <Toaster />
 <ModeWatcher defaultMode="light" />
 
-<div class="container">
+<div class="container min-h-screen flex flex-col">
 	<slot />
 </div>

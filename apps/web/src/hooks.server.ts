@@ -4,10 +4,17 @@ import { sequence } from '@sveltejs/kit/hooks';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	// Protect any routes under /authenticated
-	if (event.url.pathname.startsWith('/finished') || event.url.pathname === '/') {
+	if (event.url.pathname.startsWith('/tasks') || event.url.pathname === '/') {
 		const session = await event.locals.auth();
 		if (!session) {
 			redirect(303, '/login');
+		}
+	}
+
+	if (event.url.pathname.startsWith('/login')) {
+		const session = await event.locals.auth();
+		if (session) {
+			redirect(304, '/');
 		}
 	}
 
