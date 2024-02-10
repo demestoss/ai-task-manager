@@ -2,15 +2,16 @@ import { type TaskDataModel, schema, and, eq, isNull } from '@repo/db';
 import type { DatabasePool } from '@repo/db';
 import { Task, type TaskId } from './model';
 import { DataError } from '../../errors/DataError';
+import type { UserId } from '../user/model';
 
 const { tasks } = schema;
 
-export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
+export async function queryAllTasks(userId: UserId, db: DatabasePool): Promise<Task[]> {
   try {
     const result = await db
       .select()
-      .from(schema.tasks)
-      .where(and(isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
+      .from(tasks)
+      .where(and(eq(tasks.userId, userId), isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
       .all();
 
     return result.map(mapTaskToDomainModel);
@@ -20,22 +21,26 @@ export async function queryAllTasks(db: DatabasePool): Promise<Task[]> {
   }
 }
 
-export async function deleteTaskById(id: TaskId, db: DatabasePool): Promise<void> {
+export async function deleteTaskById(userId: UserId, id: TaskId, db: DatabasePool): Promise<void> {
   const result = await db
-    .delete(schema.tasks)
-    .where(eq(schema.tasks.id, id))
-    .returning({ id: schema.tasks.id });
+    .delete(tasks)
+    .where(and(eq(tasks.userId, userId), eq(tasks.id, id)))
+    .returning({ id: tasks.id });
 
   if (result.length === 0) {
     throw new DataError('not-found', "Task doesn't exists");
   }
 }
 
-export async function softDeleteTaskById(id: TaskId, db: DatabasePool): Promise<TaskId> {
+export async function softDeleteTaskById(
+  userId: UserId,
+  id: TaskId,
+  db: DatabasePool
+): Promise<TaskId> {
   const result = await db
     .update(tasks)
     .set({ deletedAt: new Date().getTime() })
-    .where(eq(tasks.id, id))
+    .where(and(eq(tasks.userId, userId), eq(tasks.id, id)))
     .returning({ id: tasks.id });
 
   if (result.length === 0) {
@@ -45,10 +50,10 @@ export async function softDeleteTaskById(id: TaskId, db: DatabasePool): Promise<
   return result[0].id;
 }
 
-export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
+export async function createTask(userId: UserId, task: Task, db: DatabasePool): Promise<Task> {
   const result = await db
     .insert(tasks)
-    .values({ ...task })
+    .values({ ...task, userId })
     .returning({
       id: tasks.id,
       name: tasks.name,
@@ -69,6 +74,7 @@ export async function createTask(task: Task, db: DatabasePool): Promise<Task> {
 export type TaskUpdateInput = Partial<TaskDataModel>;
 
 export async function updateTask(
+  userId: UserId,
   id: TaskId,
   taskInput: TaskUpdateInput,
   db: DatabasePool
@@ -76,7 +82,7 @@ export async function updateTask(
   const result = await db
     .update(tasks)
     .set({ ...taskInput })
-    .where(eq(tasks.id, id))
+    .where(and(eq(tasks.userId, userId), eq(tasks.id, id)))
     .returning({
       id: tasks.id,
       name: tasks.name,
@@ -94,7 +100,7 @@ export async function updateTask(
   return mapTaskToDomainModel(result[0]);
 }
 
-export function mapTaskToDomainModel(task: Omit<TaskDataModel, 'deletedAt'>): Task {
+export function mapTaskToDomainModel(task: Omit<TaskDataModel, 'deletedAt' | 'userId'>): Task {
   return {
     id: task.id,
     name: task.name,
