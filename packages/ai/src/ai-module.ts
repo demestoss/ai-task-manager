@@ -1,16 +1,14 @@
-import type { AnyZodObject, z } from 'zod';
+import { Task, type TaskCategory } from '@repo/domain/task';
+import { z } from 'zod';
 
 export interface TaskInput {
   name: string;
-  category?: string;
+  category?: TaskCategory;
 }
 
-export type TaskPrediction<TSchema extends AnyZodObject> = z.input<TSchema>;
+export const TaskPrediction = Task.omit({ id: true, createdAt: true });
+export type TaskPrediction = z.infer<typeof TaskPrediction>;
 
-// TODO: Instead of passing schema, make domain module
 export interface AiModule {
-  makeTaskPrediction<TSchema extends AnyZodObject>(
-    taskInput: TaskInput,
-    taskSchema: TSchema
-  ): Promise<TaskPrediction<TSchema>>;
+  makeTaskPrediction(taskInput: TaskInput): Promise<TaskPrediction>;
 }

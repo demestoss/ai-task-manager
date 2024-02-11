@@ -1,4 +1,4 @@
-import { Task } from './model';
+import { Task } from '@repo/domain/task';
 import { z } from 'zod';
 
 export const TaskParam = Task.pick({ id: true });

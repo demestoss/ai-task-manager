@@ -1,11 +1,10 @@
-import type { TaskInput } from '../ai-module';
+import type { TaskInput, TaskPrediction } from '../ai-module';
+import type { TaskCategory, TaskPriority } from '@repo/domain/task';
 
-// TaskPriorities
-const priorities = ['high', 'low', 'medium', 'useless'];
-// TaskCategories
-const categories = ['coding', 'hobby', 'home', 'work', 'other', 'reading'];
+const priorities: TaskPriority[] = ['high', 'low', 'medium', 'useless'];
+const categories: TaskCategory[] = ['coding', 'hobby', 'home', 'work', 'other', 'reading'];
 
-export async function makeTaskDummyPrediction(task: TaskInput) {
+export async function makeTaskDummyPrediction(task: TaskInput): Promise<TaskPrediction> {
   return {
     ...task,
     description: randomText(randomIntInRange(50, 255)),

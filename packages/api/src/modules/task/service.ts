@@ -1,7 +1,7 @@
 import type { DatabasePool } from '@repo/db';
-import { Task, type TaskId } from './model';
+import { Task, type TaskId } from '@repo/domain/task';
 import * as queries from './queries';
-import type { UserId } from '../user/model';
+import type { UserId } from '@repo/domain/user';
 import type { AiModule } from '@repo/ai';
 
 export async function getAllTasks(userId: UserId, db: DatabasePool): Promise<Task[]> {

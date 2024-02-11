@@ -1,8 +1,8 @@
 import { type TaskDataModel, schema, and, eq, isNull } from '@repo/db';
 import type { DatabasePool } from '@repo/db';
-import { Task, type TaskId } from './model';
+import { Task, type TaskId } from '@repo/domain/task';
 import { DataError } from '../../errors/DataError';
-import type { UserId } from '../user/model';
+import type { UserId } from '@repo/domain/user';
 
 const { tasks } = schema;
 

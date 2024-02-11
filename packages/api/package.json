@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@repo/db": "workspace:*",
+    "@repo/domain": "workspace:*",
     "@repo/ai": "workspace:*",
     "@repo/date-utils": "workspace:*",
     "@repo/auth": "workspace:*",

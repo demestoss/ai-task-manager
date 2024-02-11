@@ -1,0 +1,19 @@
+{
+  "name": "@repo/domain",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./task": "./src/task.ts",
+    "./finished-task": "./src/finished-task.ts",
+    "./user": "./src/user.ts"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

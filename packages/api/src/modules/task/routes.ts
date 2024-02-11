@@ -1,6 +1,6 @@
 import type { HonoContext } from '../../context';
 import { Hono } from 'hono';
-import { Task } from './model';
+import { Task } from '@repo/domain/task';
 import { zValidator } from '@hono/zod-validator';
 import { Responder } from '../../responder';
 import * as model from './service';

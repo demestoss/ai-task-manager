@@ -2,9 +2,9 @@ import type { DatabasePool } from '@repo/db';
 import { type FinishedTaskDataModel, schema, and, desc, eq, isNotNull, isNull } from '@repo/db';
 import { DataError } from '../../errors/DataError';
 import { mapTaskToDomainModel } from '../task/queries';
-import type { FinishedTask } from './model';
-import type { Task, TaskId } from '../task/model';
-import type { UserId } from '../user/model';
+import type { UserId } from '@repo/domain/user';
+import type { FinishedTask } from '@repo/domain/finished-task';
+import type { Task, TaskId } from '@repo/domain/task';
 
 const { tasks } = schema;
 

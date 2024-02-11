@@ -1,4 +1,4 @@
-import { Task } from '../task/model';
+import { Task } from './task';
 import { z } from 'zod';
 
 export const FinishedTask = Task.merge(

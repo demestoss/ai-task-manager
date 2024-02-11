@@ -1,4 +1,4 @@
-type DateFormat = 'DD-MM-YYYY' | 'MM-DD-YYYY' | 'D MMM, YYYY';
+export type DateFormat = 'DD-MM-YYYY' | 'MM-DD-YYYY' | 'D MMM, YYYY';
 
 export function formatDate(date: Date, format: DateFormat = 'D MMM, YYYY') {
   switch (format) {
@@ -31,20 +31,3 @@ export function addDays(addTo: Date, days: number): Date {
   return date;
 }
 
-export type Timestamp = number;
-
-export function dateFromTimestamp(timestamp: Timestamp): Date {
-  return new Date(timestamp);
-}
-
-export function formatTimestamp(timestamp: Timestamp, format?: DateFormat): string {
-  return formatDate(dateFromTimestamp(timestamp), format);
-}
-
-export function isFutureTimestamp(date: Timestamp): boolean {
-  return isFutureDate(dateFromTimestamp(date));
-}
-
-export function getDaysDiffTimestamp(from: Timestamp, to: Timestamp): number {
-  return getDaysDiff(dateFromTimestamp(from), dateFromTimestamp(to));
-}

@@ -1,5 +1,4 @@
 import OpenAI from 'openai';
-import type { AnyZodObject } from 'zod';
 import type { AiModule, TaskInput, TaskPrediction } from '../ai-module';
 
 export class OpenAIModule implements AiModule {
@@ -9,10 +8,7 @@ export class OpenAIModule implements AiModule {
     this.#openai = new OpenAI({ apiKey: secretKey });
   }
 
-  async makeTaskPrediction<TSchema extends AnyZodObject>(
-    { name }: TaskInput,
-    taskSchema: TSchema
-  ): Promise<TaskPrediction<TSchema>> {
+  async makeTaskPrediction({ name }: TaskInput): Promise<TaskPrediction> {
     return { name };
   }
 }

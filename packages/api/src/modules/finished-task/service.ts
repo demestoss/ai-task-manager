@@ -1,15 +1,15 @@
 import {
-  addDays,
   formatTimestamp,
   getDaysDiffTimestamp,
-  isFutureTimestamp
-} from '@repo/date-utils';
+  isFutureTimestamp,
+} from '@repo/date-utils/timestamp';
 import type { DatabasePool } from '@repo/db';
 import { updateTask } from '../task/queries';
-import type { Task, TaskId } from '../task/model';
-import type { FinishedTask, FinishedTaskGroup } from './model';
 import * as queries from './queries';
-import type { UserId } from '../user/model';
+import type { UserId } from '@repo/domain/user';
+import type { FinishedTask, FinishedTaskGroup } from '@repo/domain/finished-task';
+import type { Task, TaskId } from '@repo/domain/task';
+import { addDays } from '@repo/date-utils';
 
 export async function getAllFinishedTasks(
   userId: UserId,
@@ -57,7 +57,7 @@ export async function restoreFinishedTask(
   if (task.dueDate && !isFutureTimestamp(task.dueDate)) {
     const daysDiff = getDaysDiffTimestamp(task.createdAt, resolutionDate);
     const dueDate = addDays(new Date(), daysDiff).getTime();
-    task = await updateTask(id, { dueDate }, db);
+    task = await updateTask(userId, id, { dueDate }, db);
   }
   return task;
 }
