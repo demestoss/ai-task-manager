@@ -19,7 +19,7 @@ This Turborepo includes the following packages/apps:
 - `server`: a Cloudflare worker app for standalone API
 - `web`: main [svelte-kit](https://kit.svelte.dev/) app
 - `api`: Hono API router to use in Web app and in standalone
-- `auth`: Auth js wrapper, that provides utilities to work with auth
+- `auth`: Utilities to work with project auth
 - `db`: DB Adapter with migrations
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-plugin-svelte` and `eslint-config-prettier`)
 
