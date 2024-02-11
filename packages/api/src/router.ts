@@ -7,6 +7,8 @@ import { taskRouter } from './modules/task/routes';
 import { parseError } from './errors/parseError';
 import { env } from 'hono/adapter';
 import { auth } from '@repo/auth/hono';
+import { HTTPException } from 'hono/http-exception';
+import { DummyAiModule, OpenAIModule } from '@repo/ai';
 
 const app = new Hono<HonoContext>().get('/ping', (c) => c.text('pong'));
 
@@ -26,14 +28,24 @@ const apiRoutes = app
     const session = await auth(c);
     c.set('session', session);
 
-    const { DATABASE_URL, DATABASE_AUTH_TOKEN } = env<{
+    const { DATABASE_URL, DATABASE_AUTH_TOKEN, OPENAI_SECRET_KEY } = env<{
       DATABASE_URL?: string;
       DATABASE_AUTH_TOKEN?: string;
+      OPENAI_SECRET_KEY?: string;
       // @ts-ignore
     }>(c);
 
     const db = getDatabaseClient(DATABASE_URL, DATABASE_AUTH_TOKEN);
     c.set('db', db);
+
+    if (session.user.aiEnabled && !OPENAI_SECRET_KEY) {
+      throw new HTTPException(500, {
+        message: 'OpenAI Secret Key is required for AI to be enabled'
+      });
+    }
+
+    const ai = session.user.aiEnabled ? new OpenAIModule(OPENAI_SECRET_KEY!) : new DummyAiModule();
+    c.set('ai', ai);
 
     await next();
   })

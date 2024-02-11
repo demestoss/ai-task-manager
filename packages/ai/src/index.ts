@@ -1,2 +1,3 @@
-export { makeTaskPrediction } from './task';
-export { AiModule } from './ai-module'
+export { type AiModule } from './ai-module';
+export { OpenAIModule } from './openai';
+export { DummyAiModule } from './dummy';

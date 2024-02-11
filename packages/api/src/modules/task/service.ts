@@ -1,10 +1,8 @@
 import type { DatabasePool } from '@repo/db';
-import type { Task, TaskId } from './model';
+import { Task, type TaskId } from './model';
 import * as queries from './queries';
-import { makeTaskRandomPrediction } from '../predicts/random-task';
 import type { UserId } from '../user/model';
-import { getUserAiEnabled } from '../user/queries';
-import * as ai from '@repo/ai';
+import type { AiModule } from '@repo/ai';
 
 export async function getAllTasks(userId: UserId, db: DatabasePool): Promise<Task[]> {
   return queries.queryAllTasks(userId, db);
@@ -23,13 +21,10 @@ type CreateTaskInput = Omit<Task, 'id' | 'createdAt'>;
 export async function createTask(
   userId: UserId,
   newTask: CreateTaskInput,
+  ai: AiModule,
   db: DatabasePool
 ): Promise<Task> {
-  const isAiEnabled = await getUserAiEnabled(userId, db);
-
-  const taskPrediction = await (isAiEnabled
-    ? ai.makeTaskPrediction(newTask)
-    : makeTaskRandomPrediction(newTask));
+  const taskPrediction = await ai.makeTaskPrediction(newTask, Task);
 
   const task: Task = {
     ...taskPrediction,

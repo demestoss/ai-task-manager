@@ -1,9 +1,16 @@
-import OpenAI from 'openai';
+import type { AnyZodObject, z } from 'zod';
 
-export class AiModule {
-	private readonly #openai: OpenAI;
+export interface TaskInput {
+  name: string;
+  category?: string;
+}
 
-	constructor(secretKey: string) {
-		this.#openai = new OpenAI();
-	}
+export type TaskPrediction<TSchema extends AnyZodObject> = z.input<TSchema>;
+
+// TODO: Instead of passing schema, make domain module
+export interface AiModule {
+  makeTaskPrediction<TSchema extends AnyZodObject>(
+    taskInput: TaskInput,
+    taskSchema: TSchema
+  ): Promise<TaskPrediction<TSchema>>;
 }
