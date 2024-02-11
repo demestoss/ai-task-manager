@@ -1,6 +1,11 @@
 import { DataError } from './DataError';
+import { HTTPException } from 'hono/http-exception';
 
 export function parseError(error: Error): [string, number] {
+  if (error instanceof HTTPException) {
+    return [error.message, error.status];
+  }
+
   if (error instanceof DataError) {
     switch (error.type) {
       case 'not-found':

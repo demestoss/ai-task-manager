@@ -1,8 +1,10 @@
 import { apiRouter } from '@repo/api';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = ({ request }) => apiRouter.fetch(request);
-export const POST: RequestHandler = ({ request }) => apiRouter.fetch(request);
-export const DELETE: RequestHandler = ({ request }) => apiRouter.fetch(request);
-export const PUT: RequestHandler = ({ request }) => apiRouter.fetch(request);
-export const PATCH: RequestHandler = ({ request }) => apiRouter.fetch(request);
+const handler: RequestHandler = async ({ request, locals }) => {
+	const session = await locals.auth();
+
+	return apiRouter.fetch(request, { session });
+};
+
+export { handler as GET, handler as POST, handler as PUT, handler as DELETE, handler as PATCH };

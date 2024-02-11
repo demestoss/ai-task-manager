@@ -1,8 +1,12 @@
 import { integer, text } from 'drizzle-orm/sqlite-core';
 import { tableCreator } from './table';
+import { users } from './auth'
 
 export const tasks = tableCreator('tasks', {
   id: text('id').primaryKey().unique(),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   description: text('description', { mode: 'text' }),
   priority: text('priority', {

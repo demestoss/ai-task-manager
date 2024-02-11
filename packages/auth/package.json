@@ -1,0 +1,21 @@
+{
+  "name": "@repo/auth",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hono": "./src/hono.ts"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*"
+  },
+  "dependencies": {
+    "@auth/core": "^0.26.3",
+    "@auth/drizzle-adapter": "^0.6.3",
+    "@repo/db": "workspace:*",
+    "hono": "^4.0.1"
+  }
+}
