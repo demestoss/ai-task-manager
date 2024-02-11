@@ -6,7 +6,7 @@ export type { Session } from '@repo/auth';
 
 // @ts-ignore
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
-	const env = event?.platform?.env ?? $env;
+	const env = event?.platform?.env ?? { ...$env };
 
 	return getAuthOptions(env);
 });

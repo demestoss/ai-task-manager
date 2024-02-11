@@ -36,3 +36,19 @@ CREATE TABLE `verificationToken` (
 	`expires` integer NOT NULL,
 	PRIMARY KEY(`identifier`, `token`)
 );
+--> statement-breakpoint
+CREATE TABLE `tasks` (
+	`id` text PRIMARY KEY NOT NULL,
+	`userId` text NOT NULL,
+	`name` text NOT NULL,
+	`description` text,
+	`priority` text,
+	`category` text,
+	`due_date` integer,
+	`resolution_date` integer,
+	`created_at` integer NOT NULL,
+	`deleted_at` integer,
+	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `tasks_id_unique` ON `tasks` (`id`);

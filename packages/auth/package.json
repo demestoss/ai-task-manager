@@ -16,6 +16,6 @@
     "@auth/core": "^0.26.3",
     "@auth/drizzle-adapter": "^0.6.3",
     "@repo/db": "workspace:*",
-    "hono": "^3.12.12"
+    "hono": "^4.0.1"
   }
 }

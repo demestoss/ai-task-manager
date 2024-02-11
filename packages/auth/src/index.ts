@@ -13,7 +13,7 @@ declare module '@auth/core/types' {
   }
 }
 
-interface Env {
+interface Env extends Record<string, unknown> {
   GITHUB_ID?: string;
   GITHUB_SECRET?: string;
   DATABASE_URL?: string;
@@ -34,6 +34,18 @@ export function getAuthOptions(env?: Env, options?: Partial<AuthConfig>) {
     ],
     secret: env?.AUTH_SECRET,
     trustHost: true,
+    callbacks: {
+      session: (opts) => {
+        if (!('user' in opts)) throw 'unreachable with session strategy';
+        return {
+          ...opts.session,
+          user: {
+            ...opts.session.user,
+            id: opts.user.id
+          }
+        };
+      }
+    },
     ...options
-  };
+  } satisfies AuthConfig;
 }

@@ -15,7 +15,7 @@
   "devDependencies": {
     "eslint": "^8.56.0",
     "@repo/eslint-config": "workspace:*",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "prettier-plugin-svelte": "^3.1.2",
     "turbo": "latest",
     "dotenv-cli": "latest"
