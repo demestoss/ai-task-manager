@@ -3,6 +3,8 @@ import type { Task, TaskId } from './model';
 import * as queries from './queries';
 import { makeTaskRandomPrediction } from '../predicts/random-task';
 import type { UserId } from '../user/model';
+import { getUserAiEnabled } from '../user/queries';
+import * as ai from '@repo/ai';
 
 export async function getAllTasks(userId: UserId, db: DatabasePool): Promise<Task[]> {
   return queries.queryAllTasks(userId, db);
@@ -23,8 +25,14 @@ export async function createTask(
   newTask: CreateTaskInput,
   db: DatabasePool
 ): Promise<Task> {
+  const isAiEnabled = await getUserAiEnabled(userId, db);
+
+  const taskPrediction = await (isAiEnabled
+    ? ai.makeTaskPrediction(newTask)
+    : makeTaskRandomPrediction(newTask));
+
   const task: Task = {
-    ...(await makeTaskRandomPrediction(newTask)),
+    ...taskPrediction,
     id: crypto.randomUUID(),
     createdAt: new Date().getTime()
   };

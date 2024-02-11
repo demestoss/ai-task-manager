@@ -22,6 +22,7 @@ app.onError((err, c) => {
 
 const apiRoutes = app
   .use('*', async (c, next) => {
+    // @ts-ignore
     const session = await auth(c);
     c.set('session', session);
 

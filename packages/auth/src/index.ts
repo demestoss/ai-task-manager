@@ -9,6 +9,7 @@ declare module '@auth/core/types' {
   interface Session {
     user: {
       id: string;
+      aiEnabled: boolean;
     } & DefaultSession['user'];
   }
 }
@@ -37,11 +38,13 @@ export function getAuthOptions(env?: Env, options?: Partial<AuthConfig>) {
     callbacks: {
       session: (opts) => {
         if (!('user' in opts)) throw 'unreachable with session strategy';
+        console.log(opts)
         return {
           ...opts.session,
           user: {
             ...opts.session.user,
-            id: opts.user.id
+            id: opts.user.id,
+            aiEnabled: opts.user.aiEnabled
           }
         };
       }

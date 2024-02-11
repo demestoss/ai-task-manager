@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@repo/db": "workspace:*",
+    "@repo/ai": "workspace:*",
     "@repo/date-utils": "workspace:*",
     "@repo/auth": "workspace:*",
     "@hono/zod-validator": "^0.1.11",

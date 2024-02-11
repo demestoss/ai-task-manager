@@ -10,5 +10,8 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*"
   },
-  "dependencies": {}
+  "dependencies": {
+    "openai": "^4.27.0",
+    "zod": "^3.22.4"
+  }
 }

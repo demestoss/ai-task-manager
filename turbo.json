@@ -14,5 +14,12 @@
       "persistent": true
     }
   },
-  "globalEnv": ["DATABASE_URL", "DATABASE_AUTH_TOKEN", "GITHUB_ID", "GITHUB_SECRET", "AUTH_SECRET"]
+  "globalEnv": [
+    "DATABASE_URL",
+    "DATABASE_AUTH_TOKEN",
+    "GITHUB_ID",
+    "GITHUB_SECRET",
+    "AUTH_SECRET",
+    "OPENAI_SECRET_KEY"
+  ]
 }
