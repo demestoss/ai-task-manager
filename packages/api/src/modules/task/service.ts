@@ -24,7 +24,7 @@ export async function createTask(
   ai: AiModule,
   db: DatabasePool
 ): Promise<Task> {
-  const taskPrediction = await ai.makeTaskPrediction(newTask, Task);
+  const taskPrediction = await ai.makeTaskPrediction(newTask);
 
   const task: Task = {
     ...taskPrediction,

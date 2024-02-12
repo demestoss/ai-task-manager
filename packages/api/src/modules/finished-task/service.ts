@@ -1,7 +1,7 @@
 import {
   formatTimestamp,
   getDaysDiffTimestamp,
-  isFutureTimestamp,
+  isFutureTimestamp
 } from '@repo/date-utils/timestamp';
 import type { DatabasePool } from '@repo/db';
 import { updateTask } from '../task/queries';
@@ -10,19 +10,22 @@ import type { UserId } from '@repo/domain/user';
 import type { FinishedTask, FinishedTaskGroup } from '@repo/domain/finished-task';
 import type { Task, TaskId } from '@repo/domain/task';
 import { addDays } from '@repo/date-utils';
+import type { PaginationParams } from '../pagination';
 
 export async function getAllFinishedTasks(
   userId: UserId,
+  pagination: PaginationParams,
   db: DatabasePool
 ): Promise<FinishedTask[]> {
-  return queries.getAllFinishedTasks(userId, db);
+  return queries.getAllFinishedTasks(userId, pagination, db);
 }
 
 export async function getAllGroupedFinishedTasks(
   userId: UserId,
+  pagination: PaginationParams,
   db: DatabasePool
 ): Promise<FinishedTaskGroup[]> {
-  const tasks = await queries.getAllFinishedTasks(userId, db);
+  const tasks = await queries.getAllFinishedTasks(userId, pagination, db);
 
   return Object.entries(
     tasks.reduce(

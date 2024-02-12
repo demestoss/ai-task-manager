@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export interface TaskInput {
   name: string;
-  category?: TaskCategory;
+  category?: TaskCategory | null;
 }
 
 export const TaskPrediction = Task.omit({ id: true, createdAt: true });

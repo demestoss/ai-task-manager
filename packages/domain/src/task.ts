@@ -12,10 +12,10 @@ export type TaskCategory = z.infer<typeof TaskCategory>;
 export const Task = z.object({
   id: TaskId,
   name: z.string().min(1).max(127),
-  description: z.string().min(1).max(2048).optional(),
-  priority: TaskPriority.optional(),
-  category: TaskCategory.optional(),
-  dueDate: z.number().optional(),
+  description: z.string().min(1).max(2048).nullish(),
+  priority: TaskPriority.nullish(),
+  category: TaskCategory.nullish(),
+  dueDate: z.number().nullish(),
   createdAt: z.number()
 });
 export type Task = z.infer<typeof Task>;

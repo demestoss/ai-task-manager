@@ -1,24 +1,32 @@
-import type { RouterContext } from '../../context';
+import type { HonoContext } from '../../context';
 import { TaskParam } from '../task/ask';
 import { zValidator } from '@hono/zod-validator';
 import * as model from './service';
 import { Hono } from 'hono';
 import type { FinishedTask, FinishedTaskGroup } from '@repo/domain/finished-task';
 import type { Task } from '@repo/domain/task';
+import { QueryPaginationParams } from '../pagination';
 
-export const finishedTasksRouter = new Hono<{ Variables: RouterContext }>()
-  .get('/', async (c) => {
+export const finishedTasksRouter = new Hono<HonoContext>()
+  .get('/', zValidator('query', QueryPaginationParams), async (c) => {
     const db = c.get('db');
     const userId = c.get('session').user.id;
-    const finishedTasks = await model.getAllFinishedTasks(userId, db);
+    const query = c.req.valid('query');
+    const finishedTasks = await model.getAllFinishedTasks(userId, query, db);
     return c.json<FinishedTask[]>(finishedTasks);
   })
-  .get('/grouped', async (c) => {
-    const db = c.get('db');
-    const userId = c.get('session').user.id;
-    const finishedTasks = await model.getAllGroupedFinishedTasks(userId, db);
-    return c.json<FinishedTaskGroup[]>(finishedTasks);
-  })
+  .get(
+    '/grouped',
+    zValidator('query', QueryPaginationParams),
+    zValidator('param', TaskParam),
+    async (c) => {
+      const db = c.get('db');
+      const userId = c.get('session').user.id;
+      const query = c.req.valid('query');
+      const finishedTasks = await model.getAllGroupedFinishedTasks(userId, query, db);
+      return c.json<FinishedTaskGroup[]>(finishedTasks);
+    }
+  )
   .post('/:id/return', zValidator('param', TaskParam), async (c) => {
     const db = c.get('db');
     const userId = c.get('session').user.id;

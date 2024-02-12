@@ -1,24 +1,27 @@
 import type { DatabasePool } from '@repo/db';
-import { type FinishedTaskDataModel, schema, and, desc, eq, isNotNull, isNull } from '@repo/db';
+import { schema, and, desc, eq, isNotNull, isNull } from '@repo/db';
 import { DataError } from '../../errors/DataError';
-import { mapTaskToDomainModel } from '../task/queries';
 import type { UserId } from '@repo/domain/user';
 import type { FinishedTask } from '@repo/domain/finished-task';
 import type { Task, TaskId } from '@repo/domain/task';
+import type { PaginationParams } from '../pagination';
 
 const { tasks } = schema;
 
 export async function getAllFinishedTasks(
   userId: UserId,
+  { limit, offset }: PaginationParams,
   db: DatabasePool
 ): Promise<FinishedTask[]> {
   const result = await db
     .select()
     .from(tasks)
     .where(and(eq(tasks.userId, userId), isNotNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
-    .orderBy(desc(tasks.resolutionDate));
+    .orderBy(desc(tasks.resolutionDate))
+    .limit(limit)
+    .offset(offset);
 
-  return result.map(mapToDomainModel);
+  return result as FinishedTask[];
 }
 
 export async function getFinishedTask(
@@ -36,7 +39,7 @@ export async function getFinishedTask(
     throw new DataError('not-found', "Task doesn't exists");
   }
 
-  return mapToDomainModel(result[0]);
+  return result[0] as FinishedTask;
 }
 
 export async function updateTaskResolutionDate(
@@ -67,18 +70,5 @@ export async function restoreTask(userId: UserId, id: TaskId, db: DatabasePool):
     throw new DataError('not-found', "Task doesn't exists");
   }
 
-  return mapTaskToDomainModel(result[0]);
-}
-
-function mapToDomainModel(task: FinishedTaskDataModel): FinishedTask {
-  return {
-    id: task.id,
-    name: task.name,
-    description: task.description ?? undefined,
-    category: task.category ?? undefined,
-    dueDate: task.dueDate ?? undefined,
-    priority: task.priority ?? undefined,
-    createdAt: task.createdAt,
-    resolutionDate: task.resolutionDate!
-  };
+  return result[0];
 }

@@ -7,18 +7,13 @@ import type { UserId } from '@repo/domain/user';
 const { tasks } = schema;
 
 export async function queryAllTasks(userId: UserId, db: DatabasePool): Promise<Task[]> {
-  try {
-    const result = await db
-      .select()
-      .from(tasks)
-      .where(and(eq(tasks.userId, userId), isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
-      .all();
+  const result = await db
+    .select()
+    .from(tasks)
+    .where(and(eq(tasks.userId, userId), isNull(tasks.resolutionDate), isNull(tasks.deletedAt)))
+    .all();
 
-    return result.map(mapTaskToDomainModel);
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+  return result;
 }
 
 export async function deleteTaskById(userId: UserId, id: TaskId, db: DatabasePool): Promise<void> {
@@ -68,7 +63,7 @@ export async function createTask(userId: UserId, task: Task, db: DatabasePool): 
     throw new DataError('creating-failed', 'Failed to create the task');
   }
 
-  return mapTaskToDomainModel(result[0]);
+  return result[0];
 }
 
 export type TaskUpdateInput = Partial<TaskDataModel>;
@@ -97,17 +92,5 @@ export async function updateTask(
     throw new DataError('not-found', "Task doesn't exists");
   }
 
-  return mapTaskToDomainModel(result[0]);
-}
-
-export function mapTaskToDomainModel(task: Omit<TaskDataModel, 'deletedAt' | 'userId'>): Task {
-  return {
-    id: task.id,
-    name: task.name,
-    description: task.description ?? undefined,
-    category: task.category ?? undefined,
-    dueDate: task.dueDate ?? undefined,
-    priority: task.priority ?? undefined,
-    createdAt: task.createdAt
-  };
+  return result[0];
 }
