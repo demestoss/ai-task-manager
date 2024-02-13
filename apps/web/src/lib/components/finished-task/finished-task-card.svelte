@@ -5,8 +5,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardFooter, CardHeader } from '$lib/components/ui/card';
 	import { CardTitle } from '$lib/components/ui/card/index.js';
-	import { getDaysDiffTimestamp } from '@repo/date-utils';
-	import type { FinishedTask } from '@repo/api';
+	import { getDaysDiffTimestamp } from '@repo/date-utils/timestamp';
+	import type { FinishedTask } from '@repo/domain/finished-task';
 
 	type Events = {
 		restore: () => void;

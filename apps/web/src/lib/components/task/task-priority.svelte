@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TaskPriority } from '@repo/api';
+	import type { TaskPriority } from '@repo/domain/task';
 	import { Badge } from '$lib/components/ui/badge';
 
 	let { priority } = $props<{ priority: TaskPriority }>();

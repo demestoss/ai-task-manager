@@ -3,17 +3,22 @@
 	import { invalidate } from '$app/navigation';
 	import { makeClient } from '$lib/make-client';
 	import { Input } from '$lib/components/ui/input';
-	import { CardContent, CardTitle, Card, CardHeader } from '$lib/components/ui/card';
+	import { CardContent, CardTitle, CardHeader } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { TaskCard } from '$lib/components/task';
-	import { CardFooter } from '$lib/components/ui/card/index.js';
 	import { toast } from 'svelte-sonner';
 
-	let { data } = $props();
+	let { data, form } = $props();
 	const client = makeClient(fetch);
 
 	let isLoading = $state(false);
 	let taskName = $state('');
+
+	$effect(() => {
+		if (form?.error) {
+			toast.error(form.error);
+		}
+	});
 
 	async function handleRestore(id: string) {
 		try {
@@ -63,28 +68,14 @@
 	}
 </script>
 
-<Card class="mb-10">
-	<form method="POST" use:enhance>
-		<CardHeader>
-			<CardTitle tag="h2">New task:</CardTitle>
-		</CardHeader>
+<form method="POST" use:enhance class="flex flex-col justify-center space-y-6">
+	<h2 class="text-2xl font-semibold leading-none tracking-tight text-center">Add task</h2>
 
-		<CardContent>
-			<Input
-				type="text"
-				name="name"
-				required
-				autofocus
-				disabled={isLoading}
-				bind:value={taskName}
-			/>
-		</CardContent>
-
-		<CardFooter>
-			<Button type="submit" disabled={isLoading}>Add</Button>
-		</CardFooter>
-	</form>
-</Card>
+	<CardContent class="flex space-x-2">
+		<Input type="text" name="name" required autofocus disabled={isLoading} bind:value={taskName} />
+		<Button type="submit" disabled={isLoading}>Add</Button>
+	</CardContent>
+</form>
 
 <div>
 	<CardHeader>

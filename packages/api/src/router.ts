@@ -19,7 +19,7 @@ app.notFound((c) => c.json({ message: 'Not Found', ok: false }, 404));
 app.onError((err, c) => {
   console.error(`${err}`);
   const [text, status] = parseError(err);
-  return c.text(text, status);
+  return c.json({ error: text }, status);
 });
 
 const apiRoutes = app

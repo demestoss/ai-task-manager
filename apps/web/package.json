@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@auth/sveltekit": "^0.12.3",
 		"@repo/api": "workspace:*",
+		"@repo/domain": "workspace:*",
 		"@repo/date-utils": "workspace:*",
 		"@repo/auth": "workspace:*",
 		"bits-ui": "^0.18.0",

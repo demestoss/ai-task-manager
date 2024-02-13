@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getDueType } from './utils';
-	import { formatDate, type Timestamp } from '@repo/date-utils';
+	import { type Timestamp, formatTimestamp } from '@repo/date-utils/timestamp';
 	import { Clock } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
-	import type { DueType } from '@repo/api';
+	import type { DueType } from '@repo/domain/task';
 
 	let { dueDate: dueDateTimestamp } = $props<{ dueDate: Timestamp }>();
 
@@ -18,7 +18,6 @@
 		}
 	}
 
-	let dueDate = $derived(new Date(dueDateTimestamp));
 	let dueType = $derived(getDueType(dueDateTimestamp));
 
 	let color = $derived(getDueColor(dueType));
@@ -32,5 +31,5 @@
 	)}
 >
 	<Clock class="size-4" />
-	{formatDate(dueDate)}
+	{formatTimestamp(dueDateTimestamp)}
 </span>

@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { formatTimestamp, getDaysDiffTimestamp, type Timestamp } from '@repo/date-utils';
+	import {
+		formatTimestamp,
+		getDaysDiffTimestamp,
+		type Timestamp
+	} from '@repo/date-utils/timestamp';
 	import { cn } from '$lib/utils';
 
 	let { dueDate, resolutionDate, createdAt } = $props<{

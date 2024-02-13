@@ -4,7 +4,7 @@
 	import { ModeWatcher } from 'mode-watcher';
 </script>
 
-<Toaster />
+<Toaster closeButton />
 <ModeWatcher defaultMode="light" />
 
 <div class="container min-h-screen flex flex-col">

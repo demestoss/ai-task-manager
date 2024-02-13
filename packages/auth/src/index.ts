@@ -38,7 +38,6 @@ export function getAuthOptions(env?: Env, options?: Partial<AuthConfig>) {
     callbacks: {
       session: (opts) => {
         if (!('user' in opts)) throw 'unreachable with session strategy';
-        console.log(opts)
         return {
           ...opts.session,
           user: {

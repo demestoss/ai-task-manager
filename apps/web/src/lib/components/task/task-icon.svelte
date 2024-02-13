@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TaskCategory } from '@repo/api';
+	import type { TaskCategory } from '@repo/domain/task';
 	import Code from 'lucide-svelte/icons/code';
 	import Bath from 'lucide-svelte/icons/bath';
 	import Fish from 'lucide-svelte/icons/fish';

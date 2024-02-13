@@ -11,10 +11,6 @@ export const actions = {
 			json: data
 		});
 
-		if (!response.ok) {
-			return { message: await response.text() };
-		}
-
 		return await response.json();
 	}
 } satisfies Actions;

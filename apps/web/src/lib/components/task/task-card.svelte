@@ -8,7 +8,7 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card/index.js';
-	import type { Task } from '@repo/api';
+	import type { Task } from '@repo/domain/task';
 	import TaskIcon from './task-icon.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import TaskPriority from './task-priority.svelte';
