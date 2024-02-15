@@ -20,11 +20,11 @@ type CreateTaskInput = Omit<Task, 'id' | 'createdAt'>;
 
 export async function createTask(
   userId: UserId,
-  newTask: CreateTaskInput,
+  createTaskInput: CreateTaskInput,
   ai: AiModule,
   db: DatabasePool
 ): Promise<Task> {
-  const taskPrediction = await ai.makeTaskPrediction(newTask);
+  const taskPrediction = await ai.makeTaskPrediction(createTaskInput);
 
   const task: Task = {
     ...taskPrediction,

@@ -1,8 +1,9 @@
-import { Task, type TaskCategory } from '@repo/domain/task';
+import { Task, type TaskCategory, type TaskDescriptionType } from '@repo/domain/task';
 import { z } from 'zod';
 
-export interface TaskInput {
+export interface TaskInput extends Partial<Task> {
   name: string;
+  descriptionType?: TaskDescriptionType;
   category?: TaskCategory | null;
 }
 
@@ -11,4 +12,5 @@ export type TaskPrediction = z.infer<typeof TaskPrediction>;
 
 export interface AiModule {
   makeTaskPrediction(taskInput: TaskInput): Promise<TaskPrediction>;
+  remakeTaskPrediction(task: Task, prompt: string): Promise<TaskPrediction>;
 }

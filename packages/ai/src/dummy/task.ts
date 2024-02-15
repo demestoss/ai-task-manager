@@ -7,7 +7,7 @@ const categories: TaskCategory[] = ['coding', 'hobby', 'home', 'work', 'other', 
 export async function makeTaskDummyPrediction(task: TaskInput): Promise<TaskPrediction> {
   return {
     ...task,
-    description: randomText(randomIntInRange(50, 255)),
+    description: task.description ?? randomText(randomIntInRange(50, 255)),
     priority: randomItemFromArray(priorities),
     category: task.category ?? randomItemFromArray(categories),
     dueDate: randomDateFromNow(new Date('2024-05-20')).getTime(),

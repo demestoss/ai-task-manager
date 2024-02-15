@@ -15,11 +15,11 @@ export const taskRouter = new Hono<HonoContext>()
     return c.json<Task[]>(tasks);
   })
   .post('/', zValidator('json', ask.TaskCreateInput), async (c) => {
-    const newTask = c.req.valid('json');
+    const createTaskInput = c.req.valid('json');
     const db = c.get('db');
     const ai = c.get('ai');
     const userId = c.get('session').user.id;
-    const task = await model.createTask(userId, newTask, ai, db);
+    const task = await model.createTask(userId, createTaskInput, ai, db);
     return c.json<Task>(task);
   })
   .patch(

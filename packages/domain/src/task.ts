@@ -9,9 +9,15 @@ export type TaskPriority = z.infer<typeof TaskPriority>;
 export const TaskCategory = z.enum(['work', 'coding', 'reading', 'home', 'hobby', 'other']);
 export type TaskCategory = z.infer<typeof TaskCategory>;
 
+export const TaskDescriptionType = z.enum(['short', 'long', 'none']);
+export type TaskDescriptionType = z.infer<typeof TaskDescriptionType>;
+
+export const TaskName = z.string().min(1).max(127);
+export type TaskName = z.infer<typeof TaskName>;
+
 export const Task = z.object({
   id: TaskId,
-  name: z.string().min(1).max(127),
+  name: TaskName,
   description: z.string().min(1).max(2048).nullish(),
   priority: TaskPriority.nullish(),
   category: TaskCategory.nullish(),
